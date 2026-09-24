@@ -1,8 +1,12 @@
-.DS_Store
-*.log
 README.md
 DECISIONS.md
 .codex-brief.txt
 preview-*.png
 verify-*.png
 reference-*.png
+.DS_Store
+*.log
+# Originales pesados: el sitio usa las versiones optimizadas de assets/img/
+assets/reference/
+assets/team/
+assets/aida-*.jpg

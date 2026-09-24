@@ -1,0 +1,8 @@
+{
+  "name": "AIDA Digital Solutions",
+  "short_name": "AIDA",
+  "icons": [{ "src": "favicon-512.png", "sizes": "512x512", "type": "image/png" }],
+  "theme_color": "#164bd8",
+  "background_color": "#ffffff",
+  "display": "browser"
+}

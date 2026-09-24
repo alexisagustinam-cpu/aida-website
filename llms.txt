@@ -1,0 +1,23 @@
+# AIDA Digital Solutions
+
+> Agencia digital que conecta estrategia, SEO, web e inteligencia artificial en un solo sistema de ventas: tráfico → web/landing → WhatsApp/formularios → CRM → automatización → venta → retención.
+
+## Servicios
+- Estrategia y Marketing: dirección clara para tomar mejores decisiones y conectar con las personas correctas.
+- SEO + GEO y Posicionamiento: visibilidad en Google y en buscadores con IA.
+- Software y Web: sitios, landings y herramientas a medida.
+- IA y Automatización: WhatsApp, CRM y procesos automatizados.
+
+## Casos
+- Raíces Santorini (inmobiliario, Cayambe): landing + WhatsApp + SEO.
+- Selfie Dental (salud): web + CRM + WhatsApp.
+- Yakutours (turismo en Ecuador): rediseño web + reservas en línea.
+
+## Equipo
+- Agustín: Software & IA
+- Ricardo: Estrategia & Growth
+- Jeremy: SEO & Posicionamiento
+- Nath: Creative & Contenido
+
+## Contacto
+- [Formulario de contacto](https://example.com/#formulario)
