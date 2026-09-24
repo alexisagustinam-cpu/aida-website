@@ -164,6 +164,7 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .case-meta { display: flex; gap: 8px; align-items: center; margin-top: 18px }
 .case-meta span, .case-meta b { padding: 7px 12px; border-radius: 999px; background: #e8f3ff; font-size: 12px }
 .case-meta b { background: var(--navy); color: #fff }
+.case-meta .case-tag { background: transparent; border: 1px solid #bcc9d9; color: var(--muted) }
 .case-scope { margin: 12px 0 0; color: var(--muted); font-size: 14px; font-weight: 700 }
 .case-result { margin: 4px 0 0; font-size: 14px }
 .case-result strong { margin-right: 4px; color: var(--blue); font-size: 22px; letter-spacing: -.02em }
@@ -172,10 +173,10 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .trust-strip { padding: 22px var(--edge); background: var(--navy); color: #fff }
 .trust-inner { width: min(1280px, 100%); margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 18px 40px; flex-wrap: wrap }
 .trust-inner p { margin: 0; color: #b5c1d0; font-size: 13px; font-weight: 700; letter-spacing: .04em }
-.trust-inner ul { display: flex; flex-wrap: wrap; gap: 14px 44px; margin: 0; padding: 0; list-style: none }
+.trust-inner ul { display: flex; flex-wrap: wrap; gap: 10px 12px; margin: 0; padding: 0; list-style: none }
 .trust-inner li { display: flex; align-items: baseline; gap: 10px }
-.trust-inner b { font-size: 18px; letter-spacing: -.02em }
-.trust-inner span { color: #7fa6ff; font-size: 12px; font-weight: 700 }
+.trust-inner b { font-size: 17px; letter-spacing: -.01em }
+.trust-inner li + li::before { content: "·"; margin-right: 12px; color: #7fa6ff }
 
 /* process */
 .process { background: #fff }

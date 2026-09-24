@@ -8,10 +8,10 @@
 - Software y Web: sitios, landings y herramientas a medida.
 - IA y Automatización: WhatsApp, CRM y procesos automatizados.
 
-## Casos
-- Raíces Santorini (inmobiliario, Cayambe): landing + WhatsApp + SEO.
-- Selfie Dental (salud): web + CRM + WhatsApp.
-- Yakutours (turismo en Ecuador): rediseño web + reservas en línea.
+## Proyectos (conceptos de diseño)
+- Raíces Santorini (inmobiliario, Cayambe): concepto de landing + WhatsApp + SEO.
+- Selfie Dental (salud): concepto de web + CRM + WhatsApp.
+- Yakutours (turismo en Ecuador): concepto de rediseño web + reservas en línea.
 
 ## Equipo
 - Agustín: Software & IA
