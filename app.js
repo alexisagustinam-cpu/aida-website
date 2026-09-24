@@ -6,7 +6,10 @@
   const closeDialog = () => dialog.close();
 
   document.querySelector('[data-year]').textContent = new Date().getFullYear();
-  window.addEventListener('scroll', () => header.classList.toggle('is-scrolled', window.scrollY > 8), { passive: true });
+  const headerSentinel = document.querySelector('[data-header-sentinel]');
+  if ('IntersectionObserver' in window && headerSentinel) {
+    new IntersectionObserver(([entry]) => header.classList.toggle('is-scrolled', !entry.isIntersecting), { threshold: 0 }).observe(headerSentinel);
+  }
   menu.addEventListener('click', () => {
     const open = menu.getAttribute('aria-expanded') === 'true';
     menu.setAttribute('aria-expanded', String(!open));
@@ -21,7 +24,7 @@
     let valid = true;
     form.querySelectorAll('[required]').forEach(field => { const parent = field.closest('.field'); const empty = !field.value.trim(); parent.classList.toggle('is-invalid', empty); field.setAttribute('aria-invalid', String(empty)); valid &&= !empty; });
     const message = form.querySelector('[data-form-message]');
-    message.textContent = valid ? 'Recibimos tu solicitud en esta versión de la web. Define el canal de recepción antes de usar este formulario en producción.' : 'Completa los campos indicados para continuar.';
+    message.textContent = valid ? 'La solicitud está lista para revisión, pero este formulario todavía no envía mensajes. Define el canal de recepción antes de usarlo en producción.' : 'Completa los campos indicados para continuar.';
   }));
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: .12 });

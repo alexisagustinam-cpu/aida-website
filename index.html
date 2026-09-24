@@ -22,10 +22,11 @@
         </nav>
       </div>
     </header>
+    <div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
 
     <main id="contenido">
       <section id="inicio" class="hero">
-        <div class="hero-copy reveal">
+        <div class="hero-copy">
           <p class="eyebrow">AIDA Digital Solutions</p>
           <h1>Ideas digitales<br />para un <em>mundo real.</em></h1>
           <p class="hero-intro">Unimos estrategia, visibilidad y sistemas para que lo digital responda a cómo se mueve tu negocio de verdad.</p>
@@ -49,19 +50,19 @@
       <section id="capacidades" class="section capabilities">
         <div class="section-label reveal"><span>02</span> Capacidades conectadas</div>
         <div class="capability-list">
-          <article class="capability reveal"><span>01</span><h3>Posicionamiento</h3><p>Ordenamos la propuesta, los mensajes y el lugar que la marca necesita ocupar para que las decisiones de comunicación tengan una dirección clara.</p></article>
-          <article class="capability reveal"><span>02</span><h3>Ventas</h3><p>Revisamos los puntos de contacto y los recorridos comerciales para hacer más claro el paso entre interés, conversación y seguimiento.</p></article>
-          <article class="capability reveal"><span>03</span><h3>Marketing &amp; contenido</h3><p>Definimos y producimos fotografía, video y piezas de marketing que explican con precisión lo que la operación necesita poner en circulación.</p></article>
-          <article class="capability reveal"><span>04</span><h3>Software &amp; automatización</h3><p>Diseñamos flujos y soluciones digitales que ayudan a conectar tareas, información y personas sin añadir complejidad innecesaria.</p></article>
+          <article class="capability"><span>01</span><h3>Posicionamiento</h3><p>Ordenamos la propuesta, los mensajes y el lugar que la marca necesita ocupar para que las decisiones de comunicación tengan una dirección clara.</p></article>
+          <article class="capability"><span>02</span><h3>Ventas</h3><p>Revisamos los puntos de contacto y los recorridos comerciales para hacer más claro el paso entre interés, conversación y seguimiento.</p></article>
+          <article class="capability"><span>03</span><h3>Marketing &amp; contenido</h3><p>Definimos y producimos fotografía, video y piezas de marketing que explican con precisión lo que la operación necesita poner en circulación.</p></article>
+          <article class="capability"><span>04</span><h3>Software &amp; automatización</h3><p>Diseñamos flujos y soluciones digitales que ayudan a conectar tareas, información y personas sin añadir complejidad innecesaria.</p></article>
         </div>
       </section>
 
       <section id="proceso" class="section process">
         <div class="process-heading"><div class="section-label reveal"><span>03</span> Cómo avanzamos</div><h2 class="reveal">De la conversación<br />a lo que funciona.</h2></div>
         <ol class="process-list">
-          <li class="reveal"><span>1</span><div><h3>Entender la operación</h3><p>Partimos de lo que hoy sucede: objetivos, personas, decisiones y fricciones.</p></div></li>
-          <li class="reveal"><span>2</span><div><h3>Diseñar el flujo</h3><p>Priorizamos una respuesta conectada, con un rol definido para cada disciplina.</p></div></li>
-          <li class="reveal"><span>3</span><div><h3>Implementar y acompañar</h3><p>Llevamos el trabajo a la práctica y mantenemos la conversación cerca de la realidad.</p></div></li>
+          <li><span>1</span><div><h3>Entender la operación</h3><p>Partimos de lo que hoy sucede: objetivos, personas, decisiones y fricciones.</p></div></li>
+          <li><span>2</span><div><h3>Diseñar el flujo</h3><p>Priorizamos una respuesta conectada, con un rol definido para cada disciplina.</p></div></li>
+          <li><span>3</span><div><h3>Implementar y acompañar</h3><p>Llevamos el trabajo a la práctica y mantenemos la conversación cerca de la realidad.</p></div></li>
         </ol>
       </section>
 
@@ -70,7 +71,7 @@
       <section id="contacto" class="contact-section">
         <div class="contact-heading reveal"><p class="eyebrow">Contacto</p><h2>Hablemos de lo que hoy<br />se está quedando a medias.</h2><p>Cuéntanos qué parte de la operación necesita una respuesta más conectada.</p></div>
         <form class="contact-form reveal" data-contact-form novalidate>
-          <p class="form-status">Canal de recepción por conectar.</p>
+          <p class="form-status" role="status" aria-live="polite">Canal de recepción por conectar.</p>
           <div class="field"><label for="name">Nombre</label><input id="name" name="name" autocomplete="name" required /></div>
           <div class="field"><label for="business">Negocio</label><input id="business" name="business" autocomplete="organization" required /></div>
           <div class="field"><label for="contact-method">Cómo prefieres que te contactemos</label><input id="contact-method" name="contact-method" placeholder="WhatsApp o email" required /></div>
@@ -81,7 +82,7 @@
     </main>
     <footer><a class="wordmark wordmark-footer" href="#inicio" aria-label="Volver al inicio"><span>A</span><span>I</span><span>D</span><span>A</span></a><p>Ideas digitales para un mundo real.</p><small>© <span data-year></span> AIDA Digital Solutions</small></footer>
 
-    <dialog class="contact-dialog" data-dialog aria-labelledby="dialog-title"><div class="dialog-inner"><button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar formulario">×</button><p class="eyebrow">Hablemos</p><h2 id="dialog-title">Empecemos por la conversación.</h2><p>Déjanos el contexto y definamos el siguiente paso.</p><form class="dialog-form" data-contact-form novalidate><p class="form-status">Canal de recepción por conectar.</p><div class="field"><label for="dialog-name">Nombre</label><input id="dialog-name" name="name" autocomplete="name" required /></div><div class="field"><label for="dialog-business">Negocio</label><input id="dialog-business" name="business" autocomplete="organization" required /></div><div class="field"><label for="dialog-contact">Cómo prefieres que te contactemos</label><input id="dialog-contact" name="contact-method" placeholder="WhatsApp o email" required /></div><div class="field"><label for="dialog-context">Contexto</label><textarea id="dialog-context" name="context" rows="3" required></textarea></div><p class="form-message" data-form-message role="status" aria-live="polite"></p><button class="button button-primary" type="submit">Compartir solicitud</button></form></div></dialog>
+    <dialog class="contact-dialog" data-dialog aria-labelledby="dialog-title"><div class="dialog-inner"><button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar formulario">×</button><p class="eyebrow">Hablemos</p><h2 id="dialog-title">Empecemos por la conversación.</h2><p>Déjanos el contexto y definamos el siguiente paso.</p><form class="dialog-form" data-contact-form novalidate><p class="form-status" role="status" aria-live="polite">Canal de recepción por conectar.</p><div class="field"><label for="dialog-name">Nombre</label><input id="dialog-name" name="name" autocomplete="name" required /></div><div class="field"><label for="dialog-business">Negocio</label><input id="dialog-business" name="business" autocomplete="organization" required /></div><div class="field"><label for="dialog-contact">Cómo prefieres que te contactemos</label><input id="dialog-contact" name="contact-method" placeholder="WhatsApp o email" required /></div><div class="field"><label for="dialog-context">Contexto</label><textarea id="dialog-context" name="context" rows="3" required></textarea></div><p class="form-message" data-form-message role="status" aria-live="polite"></p><button class="button button-primary" type="submit">Compartir solicitud</button></form></div></dialog>
     <script src="app.js"></script>
   </body>
 </html>
