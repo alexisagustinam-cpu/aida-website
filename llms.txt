@@ -26,4 +26,4 @@
 4. Medición de leads y ventas, y mejora continua.
 
 ## Contacto
-- [Solicitar diagnóstico gratuito](https://example.com/#formulario)
+- [Solicitar diagnóstico gratuito](https://aida-website-fawn.vercel.app/#formulario)
