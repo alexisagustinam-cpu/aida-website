@@ -16,7 +16,7 @@ Abre `http://localhost:4274` en el navegador.
 
 1. **Canales y formulario** — completa el objeto `SITE` al inicio de `app.js`:
    - `formEndpoint`: URL que recibe el formulario por POST (JSON), p. ej. un webhook de n8n.
-   - `bookingUrl`: agenda online (Cal.com, Calendly) para el diagnóstico gratuito.
+   - `bookingUrl`: el link del evento de Cal.com para el diagnóstico gratuito (ya configurado). El formulario pasa a un paso 2 con ese calendario embebido y prellenado; en Cal.com, las preguntas de reserva "Negocio" y "¿En qué te ayudamos?" deben tener el identificador `negocio` y `servicio` (Advanced → Booking Questions), y el teléfono debe estar marcado como requerido, para que el prellenado funcione. Si se deja vacío, el formulario vuelve a enviarse por `formEndpoint`, WhatsApp o correo.
    - `whatsapp`, `email`, `instagram`, `linkedin`. Los vacíos no se muestran.
    - Sin `formEndpoint`, el formulario abre WhatsApp (o el correo) con el mensaje redactado. Sin ningún canal, avisa que no está conectado.
 2. **Dominio** — hoy se usa `https://aida-website-fawn.vercel.app`; con dominio propio, reemplázalo en `index.html`, `privacidad.html`, `robots.txt`, `sitemap.xml` y `llms.txt`.

@@ -244,7 +244,6 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .form-benefits { display: grid; gap: 12px; margin: 26px 0 0; padding: 0; list-style: none; font-size: 15px; font-weight: 700 }
 .form-benefits li { display: flex; align-items: center; gap: 10px }
 .form-benefits svg { color: var(--teal) }
-.booking-link { margin-top: 26px }
 .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(22, 75, 216, .14) }
 .form-field input:user-invalid, .form-field textarea:user-invalid, .form-field select:user-invalid { border-color: #b42318 }
 .form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
@@ -254,6 +253,16 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .form-message { min-height: 1.35em; margin: 0; color: var(--blue); font-size: 13px; font-weight: 700 }
 .form-message:empty { display: none }
 .form-message.is-error { color: #b42318 }
+
+/* paso 2: calendario de reserva */
+.form-step-label { grid-column: 1 / -1; margin: 0 0 4px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase }
+.booking-step { padding: 26px 26px 30px; border-radius: 18px; background: #fff; box-shadow: 0 18px 38px rgba(18, 47, 85, .09) }
+.booking-back { margin-bottom: 6px; padding: 6px 0; border: 0; background: none; color: var(--blue); font-size: 13px; font-weight: 800; cursor: pointer }
+.booking-embed { min-height: 480px; margin-top: 14px }
+.booking-embed iframe { width: 100%; border: 0 }
+.booking-loading { display: grid; place-items: center; min-height: 480px; margin: 0; color: var(--muted); font-size: 14px }
+.booking-fallback { margin: 14px 0 0; color: var(--muted); font-size: 13px }
+.booking-fallback a { color: var(--blue); font-weight: 700; text-decoration: underline }
 
 /* contact channels */
 .contact-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; padding: 0; list-style: none }
@@ -427,6 +436,7 @@ button:active, .button:active { transform: scale(.98) }
   .contact-form-wrap { grid-template-columns: 1fr; gap: 28px }
   .contact-form { grid-template-columns: 1fr; padding: 21px }
   .contact-form .button { width: 100% }
+  .booking-step { padding: 18px }
 
   .footer-inner { grid-template-columns: 1fr; gap: 22px }
   .footer-inner p { text-align: left }

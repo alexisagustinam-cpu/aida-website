@@ -288,30 +288,41 @@
             <li><svg aria-hidden="true"><use href="#i-check"/></svg>Hablas directo con el equipo que lo construye</li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg>Te llevas recomendaciones concretas</li>
           </ul>
-          <a class="button button-outline booking-link" data-booking-link hidden>Prefiero elegir día y hora <b aria-hidden="true">→</b></a>
           <ul class="contact-links" data-contact-links hidden></ul>
         </div>
-        <form class="contact-form reveal" data-contact-form novalidate>
-          <div class="form-field"><label for="contact-name">Nombre</label><input id="contact-name" name="name" autocomplete="name" required></div>
-          <div class="form-field"><label for="contact-business">Negocio</label><input id="contact-business" name="business" autocomplete="organization" required></div>
-          <div class="form-field form-field-full"><label for="contact-channel">WhatsApp o correo</label><input id="contact-channel" name="channel" autocomplete="off" inputmode="email" aria-describedby="contact-channel-hint" required><small id="contact-channel-hint">Ej.: +593 99 123 4567 o nombre@empresa.com</small></div>
-          <div class="form-field form-field-full"><label for="contact-service">¿En qué te ayudamos?</label>
-            <select id="contact-service" name="service" required>
-              <option value="" disabled selected>Elige una opción</option>
-              <option>Web o landing</option>
-              <option>SEO + GEO</option>
-              <option>WhatsApp, CRM y automatización</option>
-              <option>Estrategia y marketing</option>
-              <option>El sistema completo</option>
-              <option>Aún no lo sé</option>
-            </select>
+        <div class="contact-form-panel reveal" data-form-panel>
+          <form class="contact-form" data-contact-form novalidate>
+            <p class="form-step-label">Paso 1 de 2 · Cuéntanos de tu negocio</p>
+            <div class="form-field"><label for="contact-name">Nombre</label><input id="contact-name" name="name" autocomplete="name" required></div>
+            <div class="form-field"><label for="contact-business">Negocio</label><input id="contact-business" name="business" autocomplete="organization" required></div>
+            <div class="form-field"><label for="contact-email">Correo</label><input id="contact-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="form-field"><label for="contact-phone">WhatsApp</label><input id="contact-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="contact-phone-hint" required><small id="contact-phone-hint">Con código de país, ej.: +593 99 123 4567</small></div>
+            <div class="form-field form-field-full"><label for="contact-service">¿En qué te ayudamos?</label>
+              <select id="contact-service" name="service" required>
+                <option value="" disabled selected>Elige una opción</option>
+                <option>Web o landing</option>
+                <option>SEO + GEO</option>
+                <option>WhatsApp, CRM y automatización</option>
+                <option>Estrategia y marketing</option>
+                <option>El sistema completo</option>
+                <option>Aún no lo sé</option>
+              </select>
+            </div>
+            <div class="form-field form-field-full"><label for="contact-context">¿Qué quieres mejorar?</label><textarea id="contact-context" name="context" rows="4" placeholder="Ej.: recibimos mensajes por WhatsApp pero no llevamos seguimiento y se nos pierden clientes." required></textarea></div>
+            <div class="form-trap" aria-hidden="true"><label for="contact-website">No completar</label><input id="contact-website" name="website" tabindex="-1" autocomplete="off"></div>
+            <label class="form-consent form-field-full"><input type="checkbox" name="consent" required><span>Acepto que AIDA use estos datos para responder mi solicitud, según la <a href="privacidad.html">política de privacidad</a>.</span></label>
+            <p class="form-message" role="status" aria-live="polite"></p>
+            <button class="button" type="submit" data-form-submit>Solicitar diagnóstico gratis <b aria-hidden="true">→</b></button>
+          </form>
+          <div class="booking-step" data-booking-step hidden>
+            <button type="button" class="booking-back" data-booking-back>← Volver a mis datos</button>
+            <p class="form-step-label">Paso 2 de 2 · Elige día y hora</p>
+            <div class="booking-embed" data-booking-embed>
+              <p class="booking-loading">Cargando el calendario…</p>
+            </div>
+            <p class="booking-fallback" data-booking-fallback hidden>¿El calendario no carga? <a data-booking-fallback-link target="_blank" rel="noopener">Ábrelo en una pestaña nueva →</a></p>
           </div>
-          <div class="form-field form-field-full"><label for="contact-context">¿Qué quieres mejorar?</label><textarea id="contact-context" name="context" rows="4" placeholder="Ej.: recibimos mensajes por WhatsApp pero no llevamos seguimiento y se nos pierden clientes." required></textarea></div>
-          <div class="form-trap" aria-hidden="true"><label for="contact-website">No completar</label><input id="contact-website" name="website" tabindex="-1" autocomplete="off"></div>
-          <label class="form-consent form-field-full"><input type="checkbox" name="consent" required><span>Acepto que AIDA use estos datos para responder mi solicitud, según la <a href="privacidad.html">política de privacidad</a>.</span></label>
-          <p class="form-message" role="status" aria-live="polite"></p>
-          <button class="button" type="submit">Solicitar diagnóstico gratis <b aria-hidden="true">→</b></button>
-        </form>
+        </div>
       </div>
     </section>
   </main>

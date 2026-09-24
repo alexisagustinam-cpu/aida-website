@@ -5,7 +5,12 @@
 // formulario abre WhatsApp (o el correo) con el mensaje ya redactado.
 const SITE = {
   formEndpoint: '',
-  bookingUrl: '', // agenda online (Cal.com, Calendly…), ej. 'https://cal.com/aida/diagnostico'
+  // Link de tu tipo de evento en Cal.com. Con esto puesto, el formulario pasa
+  // a un paso 2 con el calendario embebido y ya lleno con lo que la persona
+  // escribió. Los identificadores de las preguntas de reserva en Cal.com
+  // deben llamarse exactamente "negocio" y "servicio" (Advanced → Booking
+  // Questions → Identificador) para que el prefill funcione.
+  bookingUrl: 'https://cal.com/agustinmejias/diagnostico-gratuito',
   whatsapp: '',   // solo dígitos con código de país, ej. '593991234567'
   email: '',      // ej. 'hola@aida.com'
   instagram: '',  // URL completa
@@ -49,15 +54,6 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
         list.append(item);
       });
       list.hidden = false;
-    });
-  }
-  if (SITE.bookingUrl) {
-    document.querySelectorAll('[data-booking-link]').forEach(link => {
-      link.href = SITE.bookingUrl;
-      link.target = '_blank';
-      link.rel = 'noopener';
-      link.hidden = false;
-      link.addEventListener('click', () => track('booking_click'));
     });
   }
   if (SITE.whatsapp) {
@@ -162,27 +158,134 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     select(0);
   }
 
+  // ─── Cal.com: carga el embed oficial una sola vez, bajo un namespace propio
+  // para no chocar con otro script que use Cal.com en la misma página.
+  const CAL_NAMESPACE = 'aida-diagnostico';
+  function loadCalApi() {
+    if (window.Cal) return window.Cal;
+    const globalCal = function (...args) {
+      const api = globalCal;
+      if (!api.loaded) {
+        api.ns = {};
+        api.q = api.q || [];
+        const script = document.createElement('script');
+        script.src = 'https://app.cal.com/embed/embed.js';
+        document.head.appendChild(script);
+        api.loaded = true;
+      }
+      if (args[0] === 'init') {
+        const namespace = args[1];
+        const inner = function (...innerArgs) { inner.q.push(innerArgs); };
+        inner.q = [];
+        if (typeof namespace === 'string') {
+          api.ns[namespace] = api.ns[namespace] || inner;
+          api.ns[namespace](...args);
+          api.q.push(['initNamespace', namespace]);
+        } else {
+          api.q.push(args);
+        }
+        return;
+      }
+      api.q.push(args);
+    };
+    window.Cal = globalCal;
+    return globalCal;
+  }
+
+  /** Convierte los datos del formulario en los query params que Cal.com usa
+   * para prellenar su formulario de reserva. Los identificadores "negocio" y
+   * "servicio" deben coincidir con los configurados en Cal.com. */
+  function calPrefillParams(data) {
+    return {
+      name: data.name,
+      email: data.email,
+      attendeePhoneNumber: data.phone.replace(/[^\d+]/g, ''),
+      notes: data.context,
+      negocio: data.business,
+      servicio: data.service,
+    };
+  }
+
+  function calLinkFromUrl(url) {
+    try {
+      return new URL(url).pathname.replace(/^\/+/, '');
+    } catch {
+      return url.replace(/^https?:\/\/[^/]+\//, '');
+    }
+  }
+
+  function mountBooking(data) {
+    const container = document.querySelector('[data-booking-embed]');
+    const fallback = document.querySelector('[data-booking-fallback]');
+    const fallbackLink = document.querySelector('[data-booking-fallback-link]');
+    const params = calPrefillParams(data);
+    const calLink = calLinkFromUrl(SITE.bookingUrl);
+
+    container.innerHTML = '<p class="booking-loading">Cargando el calendario…</p>';
+    fallback.hidden = true;
+    fallbackLink.href = `${SITE.bookingUrl}?${new URLSearchParams(params).toString()}`;
+
+    // Si el script no carga en unos segundos (bloqueador, red, Cal.com caído),
+    // se ofrece el mismo calendario, prellenado, en una pestaña aparte.
+    const fallbackTimer = setTimeout(() => { fallback.hidden = false; }, 5000);
+
+    // Cal.com agrega su iframe como hijo del contenedor sin quitar lo que
+    // había antes: en cuanto aparece, se quita el texto "Cargando…" a mano.
+    const removeLoadingText = () => container.querySelector('.booking-loading')?.remove();
+    if ('MutationObserver' in window) {
+      const ready = new MutationObserver(() => {
+        if (container.querySelector('iframe')) { removeLoadingText(); ready.disconnect(); }
+      });
+      ready.observe(container, { childList: true });
+    }
+
+    const Cal = loadCalApi();
+    Cal('init', CAL_NAMESPACE, { origin: 'https://cal.com' });
+    Cal.ns[CAL_NAMESPACE]('inline', {
+      elementOrSelector: container,
+      calLink,
+      config: { ...params, layout: 'month_view', locale: 'es' },
+    });
+    Cal.ns[CAL_NAMESPACE]('ui', {
+      styles: { branding: { brandColor: '#164bd8' } },
+      hideEventTypeDetails: false,
+      layout: 'month_view',
+    });
+    Cal.ns[CAL_NAMESPACE]('on', {
+      action: 'linkReady',
+      callback: () => { clearTimeout(fallbackTimer); fallback.hidden = true; removeLoadingText(); },
+    });
+    Cal.ns[CAL_NAMESPACE]('on', {
+      action: 'bookingSuccessful',
+      callback: () => track('generate_lead', { method: 'calendar', service: data.service }),
+    });
+  }
+
   // ─── Formulario ──────────────────────────────────────────────────────────
   const contactForm = document.querySelector('[data-contact-form]');
   if (contactForm) {
     const formMessage = contactForm.querySelector('.form-message');
-    const submitButton = contactForm.querySelector('[type="submit"]');
-    const channelInput = contactForm.elements.channel;
+    const submitButton = contactForm.querySelector('[data-form-submit]');
+    const formPanel = document.querySelector('[data-form-panel]');
+    const bookingStep = document.querySelector('[data-booking-step]');
+    const bookingBack = document.querySelector('[data-booking-back]');
+    const phoneInput = contactForm.elements.phone;
     const showMessage = (text, isError = false) => {
       formMessage.textContent = text;
       formMessage.classList.toggle('is-error', isError);
     };
-    const isValidChannel = value => {
-      const email = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
-      const phone = /^\+?[\d\s().-]+$/.test(value) && value.replace(/\D/g, '').length >= 8;
-      return email || phone;
-    };
-    channelInput.addEventListener('input', () => channelInput.setCustomValidity(''));
+    const isValidPhone = value => /^\+?[\d\s().-]+$/.test(value) && value.replace(/\D/g, '').length >= 8;
+    phoneInput.addEventListener('input', () => phoneInput.setCustomValidity(''));
+
+    bookingBack?.addEventListener('click', () => {
+      bookingStep.hidden = true;
+      contactForm.hidden = false;
+    });
 
     contactForm.addEventListener('submit', async event => {
       event.preventDefault();
-      const value = channelInput.value.trim();
-      channelInput.setCustomValidity(value && !isValidChannel(value) ? 'Escribe un número de WhatsApp o un correo válido.' : '');
+      const phone = phoneInput.value.trim();
+      phoneInput.setCustomValidity(phone && !isValidPhone(phone) ? 'Escribe un número de WhatsApp válido, con código de país.' : '');
       if (!contactForm.checkValidity()) {
         showMessage('Revisa los campos marcados para continuar.', true);
         contactForm.reportValidity();
@@ -192,7 +295,17 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       const data = Object.fromEntries(new FormData(contactForm));
       if (data.website) return; // honeypot: solo lo completan los bots
       delete data.website;
-      const summary = `Hola AIDA, soy ${data.name} de ${data.business}. Quiero un diagnóstico gratuito.\n\nMe interesa: ${data.service}\n${data.context}\n\nContacto: ${data.channel}`;
+
+      if (SITE.bookingUrl) {
+        contactForm.hidden = true;
+        bookingStep.hidden = false;
+        bookingStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        mountBooking(data);
+        track('booking_step_view', { service: data.service });
+        return;
+      }
+
+      const summary = `Hola AIDA, soy ${data.name} de ${data.business}. Quiero un diagnóstico gratuito.\n\nMe interesa: ${data.service}\n${data.context}\n\nContacto: ${data.email} / ${data.phone}`;
 
       if (SITE.formEndpoint) {
         submitButton.disabled = true;
