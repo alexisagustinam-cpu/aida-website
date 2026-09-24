@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+.codex-brief.txt
+.vercel/
+preview-*.png
+verify-*.png
+reference-*.png
