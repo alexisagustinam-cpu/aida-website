@@ -34,6 +34,22 @@
   document.querySelectorAll('[data-close-dialog]').forEach(button => button.addEventListener('click', closeDialog));
   dialog.addEventListener('click', event => { if (event.target === dialog) closeDialog(); });
 
+  const contactForm = document.querySelector('[data-contact-form]');
+  if (contactForm) {
+    const formMessage = contactForm.querySelector('.form-message');
+    contactForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!contactForm.checkValidity()) {
+        formMessage.textContent = 'Completa los campos obligatorios para continuar.';
+        formMessage.classList.add('is-error');
+        contactForm.reportValidity();
+        return;
+      }
+      formMessage.textContent = 'Gracias. El formulario está listo para conectarse al canal de recepción de AIDA.';
+      formMessage.classList.remove('is-error');
+    });
+  }
+
   const revealItems = [...document.querySelectorAll('.reveal')];
   revealItems.forEach((item, index) => {
     item.style.setProperty('--reveal-delay', `${Math.min((index % 5) * 65, 260)}ms`);
