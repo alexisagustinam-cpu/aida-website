@@ -3,94 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AIDA une estrategia, contenido y sistemas digitales.">
+  <meta name="description" content="AIDA: estrategia, tecnología y creatividad para resultados reales.">
   <title>AIDA Digital Solutions</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" href="assets/aida-hero.jpg" as="image">
+  <link rel="preload" href="assets/reference/hero_aida.png" as="image">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
-  <header class="site-header" data-header>
-    <div class="header-inner">
-      <a class="wordmark" href="#inicio" aria-label="AIDA Digital Solutions, inicio">AIDA</a>
-      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false"><span class="sr-only">Abrir menú</span><i></i><i></i></button>
-      <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
-        <a href="#enfoque">Enfoque</a><a href="#servicios">Servicios</a><a href="#equipo">Equipo</a><a href="#contacto">Contacto</a>
-        <button class="nav-cta" type="button" data-open-dialog>Hablemos</button>
-      </nav>
-    </div>
-  </header>
-  <div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
+  <header class="site-header" data-header><div class="header-inner">
+    <a class="logo" href="#inicio" aria-label="AIDA Digital Solutions, inicio"><img src="assets/reference/AIDA_LOGO_PNG.png" alt="AIDA Digital Solutions"></a>
+    <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false"><span class="sr-only">Abrir menú</span><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+      <a href="#servicios">Servicios <svg aria-hidden="true" viewBox="0 0 12 12"><path d="m3 4.5 3 3 3-3"/></svg></a><a href="#proyectos">Proyectos</a><a href="#nosotros">Nosotros</a><a href="#insights">Insights</a><a href="#contacto">Contacto</a>
+    </nav>
+    <button class="button button-small header-cta" type="button" data-open-dialog>Hablemos <b>→</b></button>
+  </div></header>
   <main id="contenido">
-    <section id="inicio" class="hero">
-      <div class="hero-copy">
-        <p class="kicker">AIDA Digital Solutions</p>
-        <h1>Ideas digitales para un mundo real.</h1>
-        <p>Unimos estrategia, contenido y sistemas para que cada parte de tu negocio tenga una dirección clara.</p>
-        <div class="hero-actions"><button class="button button-primary" type="button" data-open-dialog>Hablemos</button><a class="secondary-link" href="#sistema">Ver el sistema</a></div>
+    <section class="hero wrap" id="inicio">
+      <div class="hero-copy reveal"><h1>Ideas digitales<br>para un <span>mundo <em>real.</em></span></h1><p>Estrategia, tecnología y creatividad para convertir oportunidades digitales en resultados reales.</p>
+        <div class="actions"><button class="button" type="button" data-open-dialog>Hablemos de tu proyecto <b>→</b></button><a class="button button-outline" href="#proyectos">Ver proyectos</a></div>
+        <ul class="facts"><li><strong>+50</strong><span>proyectos lanzados</span></li><li><strong>+</strong><span>Marcas que confían<br>en nosotros</span></li><li><strong>∞</strong><span>Resultados medibles<br>y sostenibles</span></li></ul>
       </div>
-      <figure class="hero-visual">
-        <div class="hero-shape shape-teal" aria-hidden="true"></div><div class="hero-shape shape-orange" aria-hidden="true"></div><div class="hero-shape shape-blue" aria-hidden="true"></div>
-        <img src="assets/aida-hero.jpg" width="1672" height="941" alt="Equipo de AIDA trabajando alrededor de una mesa" fetchpriority="high">
-      </figure>
+      <figure class="hero-art reveal" aria-label="Equipo de AIDA"><div class="arc arc-blue"></div><div class="arc arc-teal"></div><div class="arc arc-orange"></div><i class="scribble scribble-one">estrategia + creatividad</i><i class="scribble scribble-two">ideas que avanzan</i><img src="assets/reference/hero_aida.png" alt="Equipo de AIDA reunido" fetchpriority="high"></figure>
     </section>
-
-    <section id="enfoque" class="intro-band reveal"><p>Hacemos que las buenas ideas encuentren una forma útil de llegar a las personas y de mover el trabajo.</p></section>
-
-    <section id="servicios" class="services section">
-      <div class="section-heading reveal"><p class="kicker">Lo que conectamos</p><h2>De la intención a lo que pasa todos los días.</h2></div>
-      <div class="service-layout">
-        <article class="service-tile service-blue reveal"><div><h3>Estrategia</h3><p>Aterrizamos prioridades, mensajes y decisiones para saber hacia dónde ir antes de producir.</p></div><span aria-hidden="true">01</span></article>
-        <article class="service-tile service-photo reveal"><img src="assets/aida-work-01.jpg" width="1672" height="941" alt="Materiales y notas en una mesa de trabajo" loading="lazy"></article>
-        <article class="service-tile service-outline reveal"><div><h3>Marketing y contenido</h3><p>Construimos las piezas y la narrativa que ayudan a explicar, atraer y mantener una presencia consistente.</p></div><span aria-hidden="true">02</span></article>
-        <article class="service-tile service-teal reveal"><div><h3>Ventas y presencia digital</h3><p>Ordenamos los puntos donde alguien descubre, entiende y empieza una conversación con tu negocio.</p></div><span aria-hidden="true">03</span></article>
-        <article class="service-tile service-orange reveal"><div><h3>Software y automatización</h3><p>Diseñamos herramientas y flujos a la medida para reducir pasos repetidos y hacer visible la información importante.</p></div><span aria-hidden="true">04</span></article>
+    <section class="services section wrap" id="servicios"><div class="section-top reveal"><div><p class="eyebrow">NUESTROS SERVICIOS</p><h2>Soluciones digitales <span>con propósito.</span></h2></div><a class="text-link" href="#contacto">Ver todos los servicios <b>→</b></a></div>
+      <div class="services-grid">
+        <article class="service-card reveal"><div class="icon blue">⌁</div><span class="corner">↗</span><h3>Estrategia y Marketing</h3><p>Dirección clara para tomar mejores decisiones y conectar con las personas correctas.</p></article>
+        <article class="service-card reveal"><div class="icon teal">⌕</div><span class="corner">↗</span><h3>SEO + GEO y Posicionamiento</h3><p>Visibilidad para que tu negocio aparezca cuando alguien busca lo que ofreces.</p></article>
+        <article class="service-card reveal"><div class="icon orange">⌘</div><span class="corner">↗</span><h3>Software y Web</h3><p>Experiencias digitales útiles, claras y pensadas para avanzar.</p></article>
+        <article class="service-card reveal"><div class="icon navy">✦</div><span class="corner">↗</span><h3>IA y Automatización</h3><p>Procesos que ahorran tiempo y convierten información en acción.</p></article>
       </div>
     </section>
-
-    <section id="sistema" class="system section">
-      <div class="system-copy reveal"><p class="kicker">Sistema conectado</p><h2>Una ruta clara para que el trabajo no se quede suelto.</h2><p>Miramos cómo se relacionan la comunicación, la experiencia digital y la operación. El flujo se adapta a cada negocio.</p></div>
-      <ol class="flow reveal" aria-label="Flujo de trabajo conceptual"><li>Tráfico y contenido</li><li>Sitio web</li><li>Conversación</li><li>Seguimiento</li><li>Operación</li></ol>
-    </section>
-
-    <section class="work-showcase section">
-      <div class="work-heading reveal"><p class="kicker">Trabajo en movimiento</p><h2>Espacios para pensar, crear y poner en marcha.</h2></div>
-      <div class="photo-composition">
-        <figure class="work-photo work-photo-one reveal"><img src="assets/aida-work-02.jpg" width="1672" height="941" alt="Personas conversando durante una sesión de trabajo" loading="lazy"><figcaption>Sesiones de trabajo</figcaption></figure>
-        <figure class="work-photo work-photo-two reveal"><img src="assets/aida-work-03.jpg" width="1672" height="941" alt="Proceso colaborativo con material visual sobre una mesa" loading="lazy"><figcaption>Diseño y producción</figcaption></figure>
-        <figure class="work-photo work-photo-three reveal"><img src="assets/aida-work-01.jpg" width="1672" height="941" alt="Notas y materiales para organizar un proyecto" loading="lazy"><figcaption>Estrategia aplicada</figcaption></figure>
+    <section class="system section" id="sistema"><div class="wrap"><div class="system-intro reveal"><div><p class="eyebrow">NUESTRO SISTEMA</p><h2>No vendemos piezas aisladas.<br><span>Construimos sistemas.</span></h2></div><p>Conectamos cada punto de contacto para que el crecimiento no dependa de esfuerzos aislados.</p></div>
+      <ol class="flow reveal"><li><span class="flow-icon blue">↗</span><b>Tráfico</b><small>Atraer</small></li><li><span class="flow-icon teal">⌘</span><b>Web / Landing</b><small>Explicar</small></li><li><span class="flow-icon orange">↙</span><b>WhatsApp / Formularios</b><small>Conectar</small></li><li><span class="flow-icon navy">◌</span><b>CRM</b><small>Ordenar</small></li><li><span class="flow-icon blue">✦</span><b>Automatización</b><small>Activar</small></li><li><span class="flow-icon orange">✓</span><b>Venta</b><small>Convertir</small></li><li><span class="flow-icon teal">↻</span><b>Retención</b><small>Fidelizar</small></li></ol>
+    </div></section>
+    <section class="cases section wrap" id="proyectos"><div class="cases-intro reveal"><p class="eyebrow">CASOS DE ÉXITO</p><h2>Resultados reales<br><span>para negocios reales.</span></h2><p>Proyectos que conectan objetivos de negocio con experiencias digitales que funcionan.</p><a class="button button-outline" href="#contacto">Ver más proyectos</a></div><div class="case-list">
+      <article class="case-card reveal"><img src="assets/reference/MOckup_raices_cleinte .png" alt="Caso de proyecto de comercio electrónico para Raíces"><div class="case-meta"><span>E-commerce</span><b>Caso de proyecto</b></div></article>
+      <article class="case-card reveal"><img src="assets/reference/Mockup selfie dental_cliente .png" alt="Caso de proyecto de servicios para Selfie Dental"><div class="case-meta"><span>Servicios</span><b>Caso de proyecto</b></div></article>
+    </div></section>
+    <section class="team section wrap" id="nosotros"><div class="team-top reveal"><div><p class="eyebrow">NUESTRO EQUIPO</p><h2>El equipo detrás de AIDA.</h2></div><a class="button button-outline" href="#contacto">Conoce más sobre nosotros <b>→</b></a></div><p class="team-lead reveal">Cuatro especialistas, una visión compartida: usar el potencial digital para generar oportunidades reales.</p>
+      <div class="team-grid">
+        <article class="team-card reveal"><div class="portrait"><img class="portrait-bg" src="assets/reference/fondo_agustin.png" alt=""><img src="assets/reference/Agustin_aida_pn.png" alt="Agustín"></div><h3>Agustín</h3><strong>Software &amp; IA</strong><p>Construye soluciones que hacen el trabajo más simple.</p></article>
+        <article class="team-card reveal"><div class="portrait"><img class="portrait-bg" src="assets/reference/fondo_ricardo.png" alt=""><img src="assets/reference/Ricardo_aida_png.png" alt="Ricardo"></div><h3>Ricardo</h3><strong>Estrategia &amp; Growth</strong><p>Convierte oportunidades en rutas de crecimiento.</p></article>
+        <article class="team-card reveal"><div class="portrait"><img class="portrait-bg" src="assets/reference/fondo_jeremy.png" alt=""><img src="assets/reference/jeremy_aida_png.png" alt="Jeremy"></div><h3>Jeremy</h3><strong>SEO &amp; Posicionamiento</strong><p>Hace que las buenas ideas puedan encontrarse.</p></article>
+        <article class="team-card reveal"><div class="portrait"><img class="portrait-bg" src="assets/reference/fondo_nath.png" alt=""><img src="assets/reference/Nath_aida_png.png" alt="Nath"></div><h3>Nath</h3><strong>Creative &amp; Contenido</strong><p>Da forma a ideas que conectan y se recuerdan.</p></article>
       </div>
     </section>
-
-    <section class="outcomes section reveal"><div><p class="kicker">Lo que buscamos</p><h2>Más claridad para decidir. Más coherencia para avanzar.</h2></div><p>El resultado es un trabajo que se entiende mejor por dentro y por fuera: prioridades visibles, mensajes que responden a la realidad y herramientas que acompañan al equipo.</p></section>
-
-    <section id="equipo" class="team section">
-      <div class="team-heading reveal"><p class="kicker">Equipo</p><h2>Distintas miradas, una misma mesa.</h2></div>
-      <div class="team-scene">
-        <figure class="member member-agustin reveal"><img src="assets/team/agustin.jpg" width="1122" height="1402" alt="Agustín"><figcaption>Agustín</figcaption></figure>
-        <figure class="member member-ricardo reveal"><img src="assets/team/ricardo.jpg" width="1122" height="1402" alt="Ricardo"><figcaption>Ricardo</figcaption></figure>
-        <figure class="member member-jeremy reveal"><img src="assets/team/jeremy.jpg" width="1122" height="1402" alt="Jeremy"><figcaption>Jeremy</figcaption></figure>
-        <figure class="member member-nath reveal"><img src="assets/team/nath.jpg" width="1122" height="1402" alt="Nath"><figcaption>Nath</figcaption></figure>
-      </div>
-    </section>
-
-    <section id="contacto" class="contact-section">
-      <div class="contact-heading reveal"><p class="kicker">Contacto</p><h2>¿Qué necesitas mover?</h2><p>Cuéntanos el contexto. Encontraremos un buen punto de partida.</p></div>
-      <form class="contact-form reveal" data-contact-form novalidate>
-        <p class="form-status" role="status" aria-live="polite">Canal de recepción por conectar.</p>
-        <div class="field"><label for="name">Nombre</label><input id="name" name="name" autocomplete="name" required></div>
-        <div class="field"><label for="business">Negocio</label><input id="business" name="business" autocomplete="organization" required></div>
-        <div class="field"><label for="contact-method">Cómo prefieres que te contactemos</label><input id="contact-method" name="contact-method" placeholder="WhatsApp o email" required></div>
-        <div class="field"><label for="context">Contexto</label><textarea id="context" name="context" rows="4" required></textarea></div>
-        <p class="form-message" data-form-message role="status" aria-live="polite"></p><button class="button button-primary" type="submit">Hablemos</button>
-      </form>
-    </section>
+    <section class="cta" id="contacto"><div class="wrap cta-inner reveal"><div><p class="eyebrow">HABLEMOS</p><h2>¿Qué está frenando<br>el crecimiento de tu negocio?</h2><p>Encontrémoslo juntos y construyamos el siguiente paso.</p></div><button class="button button-white" type="button" data-open-dialog>Cuéntanos tu proyecto <b>→</b></button></div></section>
+    <section id="insights" class="sr-only" aria-label="Insights"></section>
   </main>
-  <footer><a class="wordmark" href="#inicio" aria-label="Volver al inicio">AIDA</a><p>Ideas digitales para un mundo real.</p><small>© <span data-year></span> AIDA Digital Solutions</small></footer>
-  <dialog class="contact-dialog" data-dialog aria-labelledby="dialog-title"><div class="dialog-inner"><button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar formulario">Cerrar</button><p class="kicker">Hablemos</p><h2 id="dialog-title">Empecemos por una conversación.</h2><p>Déjanos el contexto y definamos el siguiente paso.</p><form class="dialog-form" data-contact-form novalidate><p class="form-status" role="status" aria-live="polite">Canal de recepción por conectar.</p><div class="field"><label for="dialog-name">Nombre</label><input id="dialog-name" name="name" autocomplete="name" required></div><div class="field"><label for="dialog-business">Negocio</label><input id="dialog-business" name="business" autocomplete="organization" required></div><div class="field"><label for="dialog-contact">Cómo prefieres que te contactemos</label><input id="dialog-contact" name="contact-method" placeholder="WhatsApp o email" required></div><div class="field"><label for="dialog-context">Contexto</label><textarea id="dialog-context" name="context" rows="3" required></textarea></div><p class="form-message" data-form-message role="status" aria-live="polite"></p><button class="button button-primary" type="submit">Hablemos</button></form></div></dialog>
+  <footer><div class="wrap footer-inner"><a class="logo footer-logo" href="#inicio" aria-label="AIDA Digital Solutions, inicio"><img src="assets/reference/AIDA_LOGO_PNG.png" alt="AIDA Digital Solutions"></a><nav aria-label="Navegación de pie"><a href="#servicios">Servicios</a><a href="#proyectos">Proyectos</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></nav><p>Ideas digitales para un <span>mundo <em>real.</em></span></p><small>© <span data-year></span> AIDA Digital Solutions</small></div></footer>
+  <dialog class="contact-dialog" data-dialog aria-labelledby="dialog-title"><div class="dialog-inner"><button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar">×</button><p class="eyebrow">HABLEMOS</p><h2 id="dialog-title">Cuéntanos de tu proyecto.</h2><p>Canal de recepción pendiente de conectar.</p><button class="button" data-close-dialog type="button">Entendido</button></div></dialog>
   <script src="app.js"></script>
-</body>
-</html>
+</body></html>
