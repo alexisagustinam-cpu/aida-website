@@ -100,12 +100,39 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .system .wrap { width: min(1280px, 100%) }
 .system-intro { display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: end }
 .system-intro > p { margin: 0; color: var(--muted); font-size: 14px }
-.flow { margin: 38px 0 0; padding: 21px 12px; display: grid; grid-template-columns: repeat(7, 1fr); list-style: none; background: #fff; border: 1px solid #deebf3; border-radius: 18px }
-.flow li { min-width: 0; min-height: 104px; padding: 4px 11px; position: relative; text-align: center; display: flex; flex-direction: column; align-items: center }
-.flow li:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 42px; color: #a8bad1; font-size: 18px }
-.flow-icon { width: 36px; height: 36px; margin-bottom: 10px; font-size: 16px }
-.flow b { font-size: 13px; line-height: 1.25 }
-.flow small { color: var(--muted); font-size: 12px }
+.system-demo { margin-top: 38px; background: #fff; border: 1px solid #deebf3; border-radius: 18px; overflow: hidden }
+.flow { padding: 14px 10px 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-bottom: 1px solid #e6eef6 }
+.flow-step { --stage-color: var(--blue); min-width: 0; position: relative; padding: 10px 8px 18px; border: 0; background: transparent; color: var(--ink); text-align: center; display: flex; flex-direction: column; align-items: center; opacity: .62; transition: opacity 220ms var(--ease) }
+.flow-step:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 26px; color: #a8bad1; font-size: 18px }
+.flow-step::before { content: ""; position: absolute; left: 10%; right: 10%; bottom: -1px; height: 3px; border-radius: 3px; background: var(--stage-color); transform: scaleX(0); transform-origin: left }
+.flow-step[aria-selected="true"] { opacity: 1 }
+.flow-step[aria-selected="true"]::before { transform: scaleX(1); transition: transform 300ms var(--ease) }
+.system-demo.is-playing .flow-step[aria-selected="true"]::before { transform: scaleX(0); animation: stage-progress var(--stage-duration, 6s) linear forwards }
+@keyframes stage-progress { to { transform: scaleX(1) } }
+.flow-step:focus-visible { outline-offset: -3px }
+.flow-step:nth-child(2), .flow-step:nth-child(7) { --stage-color: var(--teal) }
+.flow-step:nth-child(3), .flow-step:nth-child(6) { --stage-color: var(--orange) }
+.flow-step:nth-child(4) { --stage-color: var(--navy) }
+.flow-icon { width: 36px; height: 36px; margin-bottom: 10px; transition: transform 220ms var(--ease), box-shadow 220ms var(--ease) }
+.flow-step[aria-selected="true"] .flow-icon { transform: scale(1.12); box-shadow: 0 0 0 5px #fff, 0 0 0 6px currentColor }
+.flow-step b { font-size: 13px; line-height: 1.25 }
+.flow-step small { color: var(--muted); font-size: 12px }
+.stage-panel { --stage-color: var(--blue); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(240px, .7fr); gap: 40px; align-items: center; padding: 34px 36px 38px }
+.stage-panel + .stage-panel { border-top: 1px solid #e6eef6 }
+.js .stage-panel + .stage-panel { border-top: 0 }
+.stage-panel.is-entering { animation: stage-in 420ms var(--ease) }
+@keyframes stage-in { from { opacity: 0; transform: translateY(8px) } }
+.stage-teal { --stage-color: #00817c }
+.stage-orange { --stage-color: #d4520a }
+.stage-navy { --stage-color: var(--navy) }
+.stage-count { color: var(--stage-color); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase }
+.stage-panel h3 { margin: 10px 0 10px; font-size: 26px; line-height: 1.15; letter-spacing: -.03em }
+.stage-panel p { margin: 0; max-width: 560px; color: var(--muted); font-size: 15px; line-height: 1.6 }
+.stage-work { padding: 20px 22px; border-radius: 14px; background: var(--pale) }
+.stage-work span { display: block; margin-bottom: 10px; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted) }
+.stage-work ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none }
+.stage-work li { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700 }
+.stage-work li::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--stage-color) }
 
 /* cases */
 .cases { padding: 88px var(--edge); background: linear-gradient(180deg, #fff 0%, #f8fbff 100%) }
@@ -275,11 +302,15 @@ button:active, .button:active { transform: scale(.98) }
   .system .wrap { width: min(1440px, 100%) }
   .system-intro { grid-template-columns: minmax(0, 1.45fr) minmax(300px, .55fr); gap: 80px }
   .system-intro > p { font-size: 16px; line-height: 1.6 }
-  .flow { margin-top: 52px; padding: 31px 20px; border-radius: 24px }
-  .flow li { min-height: 144px; padding: 8px 17px }
-  .flow li:not(:last-child)::after { top: 57px; right: -10px; font-size: 22px }
-  .flow-icon { width: 48px; height: 48px; margin-bottom: 14px; font-size: 20px }
-  .flow b { font-size: 14px }
+  .system-demo { margin-top: 52px; border-radius: 24px }
+  .flow { padding: 22px 16px 0 }
+  .flow-step { padding: 10px 14px 24px }
+  .flow-step:not(:last-child)::after { top: 32px; right: -10px; font-size: 22px }
+  .flow-icon { width: 48px; height: 48px; margin-bottom: 14px }
+  .flow-step b { font-size: 14px }
+  .stage-panel { padding: 44px 48px 48px; gap: 64px }
+  .stage-panel h3 { font-size: 32px }
+  .stage-panel p { font-size: 17px }
   .cases { padding-block: 118px }
   .case-list { gap: 34px }
   .process-steps { margin-top: 56px; gap: 24px }
@@ -342,10 +373,15 @@ button:active, .button:active { transform: scale(.98) }
 
   .system { padding: 64px var(--edge) }
   .system-intro { grid-template-columns: 1fr; gap: 18px }
-  .flow { margin-top: 31px; padding: 12px; grid-template-columns: 1fr; gap: 0 }
-  .flow li { min-height: 0; padding: 12px 12px 12px 56px; align-items: flex-start; text-align: left }
-  .flow li:not(:last-child)::after { content: "↓"; top: auto; bottom: -12px; left: 17px; right: auto; z-index: 1 }
-  .flow-icon { position: absolute; left: 10px; top: 12px; width: 34px; height: 34px; margin: 0 }
+  .system-demo { margin-top: 31px }
+  .flow { display: flex; padding: 10px 6px 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none }
+  .flow::-webkit-scrollbar { display: none }
+  .flow-step { flex: 0 0 96px; scroll-snap-align: center; padding: 8px 4px 16px }
+  .flow-step:not(:last-child)::after { top: 22px; right: -7px; font-size: 14px }
+  .flow-step b { font-size: 12px }
+  .flow-step small { font-size: 11px }
+  .stage-panel { grid-template-columns: 1fr; gap: 20px; padding: 24px 20px 26px }
+  .stage-panel h3 { font-size: 22px }
 
   .cases { padding: 64px var(--edge) }
   .cases-intro { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px }
@@ -381,5 +417,6 @@ button:active, .button:active { transform: scale(.98) }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto }
   .js .reveal, .js .reveal-image { opacity: 1; transform: none; clip-path: none; transition: none }
-  .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .case-card, .case-card img, .portrait-person, .whatsapp-float, .faq summary svg { transition: none }
+  .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .case-card, .case-card img, .portrait-person, .whatsapp-float, .faq summary svg, .flow-step, .flow-icon { transition: none }
+  .stage-panel.is-entering { animation: none }
 }

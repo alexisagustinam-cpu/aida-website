@@ -134,15 +134,47 @@
     <section class="system section" id="sistema">
       <div class="wrap">
         <div class="system-intro reveal"><div><p class="eyebrow">NUESTRO SISTEMA</p><h2>No vendemos piezas aisladas.<br><span>Construimos sistemas.</span></h2></div><p>Una web sola no vende. Conectamos cada paso, desde que alguien te encuentra hasta que vuelve a comprarte, para que el crecimiento no dependa de esfuerzos sueltos.</p></div>
-        <ol class="flow reveal">
-          <li><span class="flow-icon blue" aria-hidden="true"><svg><use href="#i-trending"/></svg></span><b>Tráfico</b><small>Atraer</small></li>
-          <li><span class="flow-icon teal" aria-hidden="true"><svg><use href="#i-monitor"/></svg></span><b>Web / Landing</b><small>Explicar</small></li>
-          <li><span class="flow-icon orange" aria-hidden="true"><svg><use href="#i-message"/></svg></span><b>WhatsApp / Formularios</b><small>Conectar</small></li>
-          <li><span class="flow-icon navy" aria-hidden="true"><svg><use href="#i-database"/></svg></span><b>CRM</b><small>Ordenar</small></li>
-          <li><span class="flow-icon blue" aria-hidden="true"><svg><use href="#i-zap"/></svg></span><b>Automatización</b><small>Activar</small></li>
-          <li><span class="flow-icon orange" aria-hidden="true"><svg><use href="#i-check"/></svg></span><b>Venta</b><small>Convertir</small></li>
-          <li><span class="flow-icon teal" aria-hidden="true"><svg><use href="#i-repeat"/></svg></span><b>Retención</b><small>Fidelizar</small></li>
-        </ol>
+        <div class="system-demo reveal" data-system>
+          <div class="flow" role="tablist" aria-label="Etapas del sistema">
+            <button class="flow-step" type="button" role="tab" id="stage-tab-1" aria-controls="stage-1" aria-selected="true"><span class="flow-icon blue" aria-hidden="true"><svg><use href="#i-trending"/></svg></span><b>Tráfico</b><small>Atraer</small></button>
+            <button class="flow-step" type="button" role="tab" id="stage-tab-2" aria-controls="stage-2" aria-selected="false" tabindex="-1"><span class="flow-icon teal" aria-hidden="true"><svg><use href="#i-monitor"/></svg></span><b>Web / Landing</b><small>Explicar</small></button>
+            <button class="flow-step" type="button" role="tab" id="stage-tab-3" aria-controls="stage-3" aria-selected="false" tabindex="-1"><span class="flow-icon orange" aria-hidden="true"><svg><use href="#i-message"/></svg></span><b>WhatsApp / Formularios</b><small>Conectar</small></button>
+            <button class="flow-step" type="button" role="tab" id="stage-tab-4" aria-controls="stage-4" aria-selected="false" tabindex="-1"><span class="flow-icon navy" aria-hidden="true"><svg><use href="#i-database"/></svg></span><b>CRM</b><small>Ordenar</small></button>
+            <button class="flow-step" type="button" role="tab" id="stage-tab-5" aria-controls="stage-5" aria-selected="false" tabindex="-1"><span class="flow-icon blue" aria-hidden="true"><svg><use href="#i-zap"/></svg></span><b>Automatización</b><small>Activar</small></button>
+            <button class="flow-step" type="button" role="tab" id="stage-tab-6" aria-controls="stage-6" aria-selected="false" tabindex="-1"><span class="flow-icon orange" aria-hidden="true"><svg><use href="#i-check"/></svg></span><b>Venta</b><small>Convertir</small></button>
+            <button class="flow-step" type="button" role="tab" id="stage-tab-7" aria-controls="stage-7" aria-selected="false" tabindex="-1"><span class="flow-icon teal" aria-hidden="true"><svg><use href="#i-repeat"/></svg></span><b>Retención</b><small>Fidelizar</small></button>
+          </div>
+          <div class="stage-panels">
+            <div class="stage-panel stage-blue" role="tabpanel" id="stage-1" aria-labelledby="stage-tab-1" tabindex="0">
+              <div><span class="stage-count">01 / 07 · Atraer</span><h3>Las personas que buscan lo que vendes llegan a ti.</h3><p>Aparecer donde tu cliente ya está buscando: Google, las respuestas de la IA y las redes. Tráfico con intención de compra, no visitas al azar.</p></div>
+              <div class="stage-work"><span>Qué hacemos</span><ul><li>SEO + GEO</li><li>Campañas en Meta y Google</li><li>Contenido para redes</li></ul></div>
+            </div>
+            <div class="stage-panel stage-teal" role="tabpanel" id="stage-2" aria-labelledby="stage-tab-2" tabindex="0">
+              <div><span class="stage-count">02 / 07 · Explicar</span><h3>En segundos entienden qué ofreces y por qué tú.</h3><p>Una página rápida y clara que responde las dudas antes de que las pregunten y lleva a una sola acción: escribirte.</p></div>
+              <div class="stage-work"><span>Qué hacemos</span><ul><li>Landing o sitio a medida</li><li>Mensajes que convierten</li><li>Rápida en el celular</li></ul></div>
+            </div>
+            <div class="stage-panel stage-orange" role="tabpanel" id="stage-3" aria-labelledby="stage-tab-3" tabindex="0">
+              <div><span class="stage-count">03 / 07 · Conectar</span><h3>Te escriben sin fricción, a cualquier hora.</h3><p>Botones directos a WhatsApp, formularios cortos y respuestas automáticas para que nadie se quede esperando.</p></div>
+              <div class="stage-work"><span>Qué hacemos</span><ul><li>WhatsApp Business</li><li>Formularios cortos</li><li>Respuestas con IA</li></ul></div>
+            </div>
+            <div class="stage-panel stage-navy" role="tabpanel" id="stage-4" aria-labelledby="stage-tab-4" tabindex="0">
+              <div><span class="stage-count">04 / 07 · Ordenar</span><h3>Cada contacto queda registrado. Nadie se pierde.</h3><p>Todos los leads en un solo lugar, con su origen, su interés y en qué etapa de la venta están.</p></div>
+              <div class="stage-work"><span>Qué hacemos</span><ul><li>CRM configurado</li><li>Etapas de venta</li><li>Origen de cada lead</li></ul></div>
+            </div>
+            <div class="stage-panel stage-blue" role="tabpanel" id="stage-5" aria-labelledby="stage-tab-5" tabindex="0">
+              <div><span class="stage-count">05 / 07 · Activar</span><h3>Los seguimientos ocurren solos.</h3><p>Recordatorios, mensajes de seguimiento y avisos a tu equipo en el momento justo, sin depender de que alguien se acuerde.</p></div>
+              <div class="stage-work"><span>Qué hacemos</span><ul><li>Seguimientos automáticos</li><li>Avisos al equipo</li><li>Flujos con n8n + IA</li></ul></div>
+            </div>
+            <div class="stage-panel stage-orange" role="tabpanel" id="stage-6" aria-labelledby="stage-tab-6" tabindex="0">
+              <div><span class="stage-count">06 / 07 · Convertir</span><h3>Tu equipo llega a cada conversación con contexto.</h3><p>Sabes quién es, qué quiere y qué vio antes de hablar. Menos preguntas repetidas, más cierres.</p></div>
+              <div class="stage-work"><span>Qué hacemos</span><ul><li>Citas y reservas en línea</li><li>Historial de cada cliente</li><li>Métricas de cierre</li></ul></div>
+            </div>
+            <div class="stage-panel stage-teal" role="tabpanel" id="stage-7" aria-labelledby="stage-tab-7" tabindex="0">
+              <div><span class="stage-count">07 / 07 · Fidelizar</span><h3>Quien compró vuelve y te recomienda.</h3><p>Mensajes post-venta, pedidos de reseña y campañas a tus clientes para que el primer negocio no sea el último.</p></div>
+              <div class="stage-work"><span>Qué hacemos</span><ul><li>Reseñas en Google</li><li>Mensajes post-venta</li><li>Campañas a clientes</li></ul></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

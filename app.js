@@ -94,6 +94,74 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     if (nav.classList.contains('is-open') && !header.contains(event.target)) setMenu(false);
   });
 
+  // ─── Sistema: recorrido por etapas ───────────────────────────────────────
+  const system = document.querySelector('[data-system]');
+  if (system) {
+    const tabs = [...system.querySelectorAll('[role="tab"]')];
+    const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+    const flow = system.querySelector('.flow');
+    const STAGE_MS = 6000;
+    const canAutoplay = !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window;
+    let current = 0;
+    let timer = null;
+    let stopped = !canAutoplay; // el usuario tomó el control: no volvemos a avanzar solos
+    let inView = false;
+    let paused = false;
+
+    system.style.setProperty('--stage-duration', `${STAGE_MS}ms`);
+    const select = (index, { focus = false } = {}) => {
+      current = (index + tabs.length) % tabs.length;
+      tabs.forEach((tab, i) => {
+        const active = i === current;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        panels[i].hidden = !active;
+      });
+      const panel = panels[current];
+      panel.classList.remove('is-entering');
+      void panel.offsetWidth;
+      panel.classList.add('is-entering');
+      // Centra la pestaña activa en móvil sin mover la página verticalmente.
+      const tab = tabs[current];
+      if (flow.scrollWidth > flow.clientWidth) {
+        flow.scrollTo({ left: tab.offsetLeft - (flow.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' });
+      }
+      if (focus) tab.focus();
+      restartProgress();
+    };
+    const restartProgress = () => {
+      system.classList.remove('is-playing');
+      clearTimeout(timer);
+      if (stopped || !inView || paused) return;
+      void system.offsetWidth;
+      system.classList.add('is-playing');
+      timer = setTimeout(() => select(current + 1), STAGE_MS);
+    };
+    const stop = () => { stopped = true; restartProgress(); };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => { stop(); select(i); track('system_stage', { stage: i + 1 }); });
+      tab.addEventListener('keydown', event => {
+        const keys = { ArrowRight: current + 1, ArrowLeft: current - 1, Home: 0, End: tabs.length - 1 };
+        if (!(event.key in keys)) return;
+        event.preventDefault();
+        stop();
+        select(keys[event.key], { focus: true });
+      });
+    });
+    system.addEventListener('pointerenter', () => { paused = true; restartProgress(); });
+    system.addEventListener('pointerleave', () => { paused = false; restartProgress(); });
+    system.addEventListener('focusin', () => { paused = true; restartProgress(); });
+    system.addEventListener('focusout', () => { paused = false; restartProgress(); });
+    if (canAutoplay) {
+      new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        restartProgress();
+      }, { threshold: 0.45 }).observe(system);
+    }
+    select(0);
+  }
+
   // ─── Formulario ──────────────────────────────────────────────────────────
   const contactForm = document.querySelector('[data-contact-form]');
   if (contactForm) {
