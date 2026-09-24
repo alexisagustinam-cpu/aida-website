@@ -134,6 +134,25 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .stage-work li { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700 }
 .stage-work li::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--stage-color) }
 
+/* compare */
+.compare { background: #fff }
+.compare-intro { text-align: center; max-width: 1000px; margin: 0 auto }
+.compare-intro h2 { text-wrap: balance }
+.compare-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 1080px; margin-inline: auto }
+.compare-card { padding: 34px 34px 36px; border-radius: 20px }
+.compare-card h3 { margin: 0 0 22px; font-size: 22px; letter-spacing: -.02em }
+.compare-card ul { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none }
+.compare-card li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; line-height: 1.45 }
+.compare-card svg { flex: none; width: 22px; height: 22px; margin-top: 0; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round }
+.compare-before { background: #f3f5f8; color: var(--muted) }
+.compare-before h3 { color: var(--ink) }
+.compare-before svg { color: #b42318 }
+.compare-after { background: var(--navy); color: #fff; position: relative; overflow: hidden; box-shadow: 0 24px 48px rgba(6, 29, 57, .18) }
+.compare-after::before { content: ""; position: absolute; width: 260px; height: 260px; right: -110px; top: -120px; border-radius: 50%; background: var(--blue); opacity: .55 }
+.compare-after > * { position: relative }
+.compare-after svg { color: #3ee0d6 }
+.compare-after .button { margin-top: 28px }
+
 /* cases */
 .cases { padding: 88px var(--edge); background: linear-gradient(180deg, #fff 0%, #f8fbff 100%) }
 .cases-intro, .case-list { width: min(1280px, 100%); margin-inline: auto }
@@ -242,6 +261,8 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .contact-links-footer a { border-color: rgba(255, 255, 255, .28); background: transparent; color: #fff; font-size: 13px }
 .whatsapp-float { position: fixed; right: 20px; bottom: 20px; z-index: 30; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #25d366; color: #fff; box-shadow: 0 10px 24px rgba(6, 29, 57, .25); transition: transform 180ms var(--ease) }
 .whatsapp-float svg { width: 30px; height: 30px; fill: currentColor }
+.mobile-cta { display: none }
+.count { font-variant-numeric: tabular-nums }
 
 /* footer */
 footer { padding: 54px 0 30px; background: var(--navy); color: #fff }
@@ -410,7 +431,17 @@ button:active, .button:active { transform: scale(.98) }
   .footer-inner p { text-align: left }
   .footer-inner small { margin-top: 4px }
   .footer-logo img { width: 140px }
-  .whatsapp-float { right: 16px; bottom: 16px; width: 52px; height: 52px }
+  .whatsapp-float { display: none }
+  .mobile-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; display: flex; gap: 10px; padding: 8px; border-radius: 999px; background: rgba(255, 255, 255, .96); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(6, 29, 57, .22); transform: translateY(calc(100% + 24px)); visibility: hidden; transition: transform 320ms var(--ease), visibility 0s linear 320ms }
+  .mobile-cta.is-visible { transform: none; visibility: visible; transition: transform 320ms var(--ease), visibility 0s }
+  .mobile-cta .button { flex: 1; min-height: 48px }
+  .mobile-cta-wa { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #25d366; color: #fff }
+  .mobile-cta-wa svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2 }
+  footer { padding-bottom: 100px }
+  .compare-grid { grid-template-columns: 1fr; margin-top: 30px; gap: 14px }
+  .compare-card { padding: 24px 22px 26px }
+  .compare-card li { font-size: 15px }
+  .compare-after .button { width: 100% }
   .js .reveal { transform: translateY(14px) }
 }
 
@@ -419,4 +450,5 @@ button:active, .button:active { transform: scale(.98) }
   .js .reveal, .js .reveal-image { opacity: 1; transform: none; clip-path: none; transition: none }
   .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .case-card, .case-card img, .portrait-person, .whatsapp-float, .faq summary svg, .flow-step, .flow-icon { transition: none }
   .stage-panel.is-entering { animation: none }
+  .mobile-cta, .mobile-cta.is-visible { transition: none }
 }

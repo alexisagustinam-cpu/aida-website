@@ -229,6 +229,52 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     });
   }
 
+  // ─── Barra fija de CTA en móvil ──────────────────────────────────────────
+  const mobileCta = document.querySelector('[data-mobile-cta]');
+  if (mobileCta && 'IntersectionObserver' in window) {
+    let heroVisible = true;
+    let formVisible = false;
+    const update = () => mobileCta.classList.toggle('is-visible', !heroVisible && !formVisible);
+    new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; update(); })
+      .observe(document.querySelector('#inicio'));
+    new IntersectionObserver(entries => {
+      formVisible = entries.some(entry => entry.isIntersecting);
+      update();
+    }, { rootMargin: '0px 0px -20% 0px' }).observe(document.querySelector('#formulario'));
+    mobileCta.querySelector('.button').addEventListener('click', () => track('mobile_cta_click'));
+  }
+
+  // ─── Cifras animadas ─────────────────────────────────────────────────────
+  const counters = [...document.querySelectorAll('.facts strong, .case-result strong')];
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  counters.forEach(el => {
+    const match = el.textContent.trim().match(/^(\D*)(\d+)(\D*)$/);
+    if (!match || reduceMotion || !('IntersectionObserver' in window)) return;
+    const [, prefix, value, suffix] = match;
+    const target = Number(value);
+    el.classList.add('count');
+    const run = () => {
+      el.style.minWidth = `${el.getBoundingClientRect().width}px`; // evita saltos de layout
+      const start = performance.now();
+      const duration = 1400;
+      const step = now => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = `${prefix}${Math.round(target * eased)}${suffix}`;
+        if (t < 1) requestAnimationFrame(step);
+      };
+      el.textContent = `${prefix}0${suffix}`;
+      requestAnimationFrame(step);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      // Espera a que termine la animación de entrada del bloque.
+      setTimeout(run, el.closest('.reveal') ? 250 : 0);
+    }, { threshold: 0.6 });
+    observer.observe(el);
+  });
+
   // ─── Animaciones de entrada ──────────────────────────────────────────────
   const revealItems = [...document.querySelectorAll('.reveal')];
   const show = item => item.classList.add('is-visible');
