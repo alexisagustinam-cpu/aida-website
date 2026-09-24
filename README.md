@@ -16,10 +16,11 @@ Abre `http://localhost:4274` en el navegador.
 
 1. **Canales y formulario** — completa el objeto `SITE` al inicio de `app.js`:
    - `formEndpoint`: URL que recibe el formulario por POST (JSON), p. ej. un webhook de n8n.
+   - `bookingUrl`: agenda online (Cal.com, Calendly) para el diagnóstico gratuito.
    - `whatsapp`, `email`, `instagram`, `linkedin`. Los vacíos no se muestran.
    - Sin `formEndpoint`, el formulario abre WhatsApp (o el correo) con el mensaje redactado. Sin ningún canal, avisa que no está conectado.
 2. **Dominio** — reemplaza `https://example.com` en `index.html`, `privacidad.html`, `robots.txt`, `sitemap.xml` y `llms.txt`.
-3. **Analítica** — activa Web Analytics en el proyecto de Vercel. El formulario envía el evento `generate_lead` (y `whatsapp_click`) a Vercel y a `dataLayer`.
+3. **Analítica** — activa Web Analytics en el proyecto de Vercel. El formulario envía el evento `generate_lead` (y `whatsapp_click`, `booking_click`) a Vercel y a `dataLayer`.
 
 ## Imágenes
 

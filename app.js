@@ -5,6 +5,7 @@
 // formulario abre WhatsApp (o el correo) con el mensaje ya redactado.
 const SITE = {
   formEndpoint: '',
+  bookingUrl: '', // agenda online (Cal.com, Calendly…), ej. 'https://cal.com/aida/diagnostico'
   whatsapp: '',   // solo dígitos con código de país, ej. '593991234567'
   email: '',      // ej. 'hola@aida.com'
   instagram: '',  // URL completa
@@ -48,6 +49,15 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
         list.append(item);
       });
       list.hidden = false;
+    });
+  }
+  if (SITE.bookingUrl) {
+    document.querySelectorAll('[data-booking-link]').forEach(link => {
+      link.href = SITE.bookingUrl;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.hidden = false;
+      link.addEventListener('click', () => track('booking_click'));
     });
   }
   if (SITE.whatsapp) {
@@ -114,7 +124,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       const data = Object.fromEntries(new FormData(contactForm));
       if (data.website) return; // honeypot: solo lo completan los bots
       delete data.website;
-      const summary = `Hola AIDA, soy ${data.name} de ${data.business}.\n\n${data.context}\n\nContacto: ${data.channel}`;
+      const summary = `Hola AIDA, soy ${data.name} de ${data.business}. Quiero un diagnóstico gratuito.\n\nMe interesa: ${data.service}\n${data.context}\n\nContacto: ${data.channel}`;
 
       if (SITE.formEndpoint) {
         submitButton.disabled = true;
@@ -141,7 +151,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
         showMessage('Abrimos WhatsApp con tu mensaje listo. Solo tienes que enviarlo.');
         track('generate_lead', { method: 'whatsapp' });
       } else if (SITE.email) {
-        location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(`Proyecto: ${data.business}`)}&body=${encodeURIComponent(summary)}`;
+        location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(`Diagnóstico: ${data.business}`)}&body=${encodeURIComponent(summary)}`;
         showMessage('Abrimos tu correo con el mensaje listo. Solo tienes que enviarlo.');
         track('generate_lead', { method: 'email' });
       } else {

@@ -68,7 +68,8 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .hero-copy > p { max-width: 475px; margin: 24px 0 26px; color: #eef5ff; font-size: 16px }
 .actions { display: flex; gap: 11px; flex-wrap: wrap }
 .hero .button-outline { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .7); color: #fff }
-.facts { display: flex; list-style: none; border-top: 1px solid rgba(255, 255, 255, .42) }
+.facts { display: flex; flex-wrap: wrap; list-style: none; border-top: 1px solid rgba(255, 255, 255, .42) }
+.facts span { white-space: nowrap }
 .facts li { display: flex; align-items: center }
 .facts strong { color: #fff; line-height: 1 }
 .facts span { color: #eef5ff; font-weight: 800; line-height: 1.3 }
@@ -80,11 +81,13 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 
 /* services */
 .services { background: #fff }
-.services-grid { margin-top: 34px; display: grid; grid-template-columns: 1.05fr .95fr 1.12fr .88fr; gap: 15px }
+.services-grid { margin-top: 34px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px }
 .service-card { min-height: 244px; position: relative; padding: 22px; border: 1px solid var(--line); border-radius: 17px; background: #fff; box-shadow: 0 8px 18px rgba(18, 47, 85, .045); transition: transform 180ms var(--ease), box-shadow 180ms var(--ease), border-color 180ms var(--ease) }
-.service-card:nth-child(2) { margin-top: 28px }
-.service-card:nth-child(4) { margin-top: 18px }
-.icon, .flow-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; font-size: 21px; font-weight: 800 }
+.icon, .flow-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50% }
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden }
+.icon svg, .flow-icon svg, .form-benefits svg, .faq summary svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round }
+.flow-icon svg { width: 19px; height: 19px }
+.section-note { max-width: 380px; margin: 0; color: var(--muted); font-size: 15px }
 .blue { background: #e9efff; color: var(--blue) }
 .teal { background: #e3f8f6; color: #00817c }
 .orange { background: #fff0e6; color: #d4520a }
@@ -118,6 +121,39 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .case-scope { margin: 12px 0 0; color: var(--muted); font-size: 14px; font-weight: 700 }
 .case-result { margin: 4px 0 0; font-size: 14px }
 .case-result strong { margin-right: 4px; color: var(--blue); font-size: 22px; letter-spacing: -.02em }
+
+/* trust strip */
+.trust-strip { padding: 22px var(--edge); background: var(--navy); color: #fff }
+.trust-inner { width: min(1280px, 100%); margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 18px 40px; flex-wrap: wrap }
+.trust-inner p { margin: 0; color: #b5c1d0; font-size: 13px; font-weight: 700; letter-spacing: .04em }
+.trust-inner ul { display: flex; flex-wrap: wrap; gap: 14px 44px; margin: 0; padding: 0; list-style: none }
+.trust-inner li { display: flex; align-items: baseline; gap: 10px }
+.trust-inner b { font-size: 18px; letter-spacing: -.02em }
+.trust-inner span { color: #7fa6ff; font-size: 12px; font-weight: 700 }
+
+/* process */
+.process { background: #fff }
+.process-steps { margin: 44px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px }
+.process-steps li { padding: 26px 24px 28px; border-radius: 17px; background: var(--pale); position: relative }
+.step-number { display: block; margin-bottom: 30px; color: var(--blue); font-size: 44px; font-weight: 800; line-height: 1; letter-spacing: -.04em }
+.process-steps li:nth-child(2) .step-number { color: var(--teal) }
+.process-steps li:nth-child(3) .step-number { color: #d4520a }
+.process-steps li:nth-child(4) .step-number { color: var(--navy) }
+.process-steps h3 { margin: 0 0 8px; font-size: 19px; letter-spacing: -.02em }
+.process-steps p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6 }
+
+/* faq */
+.faq { background: var(--pale) }
+.faq-inner { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 72px; align-items: start }
+.faq-inner .section-note { margin-top: 20px }
+.faq-list { border-top: 1px solid #cfdcea }
+.faq details { border-bottom: 1px solid #cfdcea }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; font-size: 17px; font-weight: 800; letter-spacing: -.01em; cursor: pointer; list-style: none }
+.faq summary::-webkit-details-marker { display: none }
+.faq summary svg { flex: none; color: var(--blue); transition: transform 220ms var(--ease) }
+.faq details[open] summary svg { transform: rotate(45deg) }
+.faq details p { margin: -6px 0 22px; max-width: 640px; color: var(--muted); font-size: 15px; line-height: 1.65 }
+.faq summary:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px }
 
 /* team: background is clipped, transparent person cutout intentionally is not */
 .team { padding-top: 82px; background: #fff }
@@ -153,10 +189,17 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .form-field-full, .form-message, .contact-form .button { grid-column: 1 / -1 }
 .form-field label { font-size: 13px; font-weight: 800 }
 .form-field small { color: var(--muted); font-size: 12px }
-.form-field input, .form-field textarea { width: 100%; border: 1px solid #bdcce0; border-radius: 9px; padding: 12px 13px; background: #fff; color: var(--ink); font: inherit; outline: 0; transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease) }
+.form-field input, .form-field textarea, .form-field select { width: 100%; border: 1px solid #bdcce0; border-radius: 9px; padding: 12px 13px; background: #fff; color: var(--ink); font: inherit; outline: 0; transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease) }
 .form-field textarea { min-height: 122px; resize: vertical }
-.form-field input:focus, .form-field textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(22, 75, 216, .14) }
-.form-field input:user-invalid, .form-field textarea:user-invalid { border-color: #b42318 }
+.form-field select { appearance: none; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23164bd8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center / 18px; padding-right: 40px; cursor: pointer }
+.form-field select:invalid { color: var(--muted) }
+.form-field input::placeholder, .form-field textarea::placeholder { color: #8391a7 }
+.form-benefits { display: grid; gap: 12px; margin: 26px 0 0; padding: 0; list-style: none; font-size: 15px; font-weight: 700 }
+.form-benefits li { display: flex; align-items: center; gap: 10px }
+.form-benefits svg { color: var(--teal) }
+.booking-link { margin-top: 26px }
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(22, 75, 216, .14) }
+.form-field input:user-invalid, .form-field textarea:user-invalid, .form-field select:user-invalid { border-color: #b42318 }
 .form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
 .form-consent { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: 13px; line-height: 1.5 }
 .form-consent input { flex: none; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--blue) }
@@ -213,11 +256,11 @@ button:active, .button:active { transform: scale(.98) }
   .wrap, .header-inner { width: min(1440px, calc(100% - 64px)) }
   .services > *, .team > *, .cases-intro, .case-list { width: min(1440px, 100%) }
   .hero { padding-block: 54px }
-  .hero-copy { width: min(690px, 52%) }
-  .hero h1 { font-size: clamp(60px, 5.7vw, 88px); line-height: 1.02; letter-spacing: -.045em }
-  .hero-copy > p { max-width: 560px; margin: 28px 0 30px; font-size: 19px; line-height: 1.5 }
+  .hero-copy { width: min(620px, 47%) }
+  .hero h1 { font-size: clamp(42px, 4.2vw, 64px); line-height: 1.05; letter-spacing: -.045em }
+  .hero-copy > p { max-width: 580px; margin: 26px 0 30px; font-size: 18px; line-height: 1.55 }
   .hero .button { min-height: 58px; padding: 14px 28px; font-size: 15px }
-  .facts { gap: 34px; margin: 42px 0 0; padding: 24px 0 0 }
+  .facts { gap: 20px 32px; margin: 38px 0 0; padding: 24px 0 0 }
   .facts li { gap: 10px }
   .facts strong { font-size: 34px }
   .facts span { font-size: 12px }
@@ -239,6 +282,8 @@ button:active, .button:active { transform: scale(.98) }
   .flow b { font-size: 14px }
   .cases { padding-block: 118px }
   .case-list { gap: 34px }
+  .process-steps { margin-top: 56px; gap: 24px }
+  .process-steps li { padding: 30px 28px 34px }
   .team { padding-top: 112px }
   .team-lead { max-width: 730px; font-size: 16px; margin: 22px 0 42px }
   .team-grid { gap: 26px }
@@ -246,6 +291,14 @@ button:active, .button:active { transform: scale(.98) }
   .team-card h3 { font-size: 20px }
   .team-card strong { font-size: 13px }
   .team-card p { font-size: 14px }
+}
+
+/* tablet */
+@media (min-width: 761px) and (max-width: 1100px) {
+  .site-nav { gap: 18px; font-size: 13px }
+  .header-cta { display: none }
+  .services-grid, .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .faq-inner { grid-template-columns: 1fr; gap: 36px }
 }
 
 /* mobile */
@@ -265,8 +318,8 @@ button:active, .button:active { transform: scale(.98) }
   .hero-background { object-position: 62% center }
   .hero-scrim { background: linear-gradient(0deg, rgba(6, 29, 57, .92) 0%, rgba(6, 29, 57, .64) 54%, rgba(6, 29, 57, .12) 100%) }
   .hero-copy { width: min(100%, 500px) }
-  .hero h1, .section h2 { font-size: 42px }
-  .hero h1 { line-height: 1.03 }
+  .hero h1, .section h2 { font-size: 40px }
+  .hero h1 { font-size: 36px; line-height: 1.06 }
   .hero-copy > p { font-size: 15px; margin: 20px 0 24px }
   .actions .button { width: 100% }
   .facts { flex-wrap: wrap; gap: 12px 18px; margin: 26px 0 0; padding: 18px 0 0 }
@@ -276,7 +329,15 @@ button:active, .button:active { transform: scale(.98) }
 
   .section-top, .team-top { align-items: flex-start; flex-direction: column }
   .services-grid { grid-template-columns: 1fr; margin-top: 28px }
-  .service-card, .service-card:nth-child(2), .service-card:nth-child(4) { min-height: 0; margin-top: 0 }
+  .service-card { min-height: 0 }
+  .section-note { max-width: none }
+  .trust-inner { flex-direction: column; align-items: flex-start; gap: 12px }
+  .trust-inner ul { gap: 10px 24px }
+  .trust-inner b { font-size: 16px }
+  .process-steps { grid-template-columns: 1fr; margin-top: 30px; gap: 14px }
+  .step-number { margin-bottom: 16px; font-size: 36px }
+  .faq-inner { grid-template-columns: 1fr; gap: 28px }
+  .faq summary { font-size: 16px; padding: 18px 0 }
   .service-card h3 { margin-top: 28px }
 
   .system { padding: 64px var(--edge) }
@@ -320,5 +381,5 @@ button:active, .button:active { transform: scale(.98) }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto }
   .js .reveal, .js .reveal-image { opacity: 1; transform: none; clip-path: none; transition: none }
-  .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .case-card, .case-card img, .portrait-person, .whatsapp-float { transition: none }
+  .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .case-card, .case-card img, .portrait-person, .whatsapp-float, .faq summary svg { transition: none }
 }
