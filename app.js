@@ -429,3 +429,243 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   addEventListener('resize', schedule, { passive: true });
   schedule();
 })();
+
+// ─── Rueda de proyectos ─────────────────────────────────────────────────────
+// En escritorio la lista de proyectos se vuelve una rueda: en reposo los
+// trabajos forman un anillo alrededor del título; al girar, el anillo se abre
+// en un tambor vertical con un proyecto al frente y sus vecinos girando en
+// perspectiva hacia arriba y abajo. Todo depende de un número, `turn`:
+// 0 es el anillo, 1 es el tambor con el primer proyecto al frente, y cada
+// entero siguiente es un proyecto más. En celular (o sin JS) queda el
+// carrusel deslizable del HTML.
+(() => {
+  const root = document.querySelector('[data-works]');
+  if (!root) return;
+  const list = root.querySelector('.works-list');
+  const cards = [...list.children];
+  const count = cards.length;
+  const last = count - 1;
+  const desktop = matchMedia('(min-width: 900px) and (pointer: fine)');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Geometría: la tarjeta se mide contra el escenario; lo demás, contra la tarjeta.
+  const CARD_H = 0.44;      // alto de la tarjeta del frente, del escenario
+  const CARD_MAX_W = 0.4;   // … pero nunca más ancha que esto del escenario
+  const CARD_RATIO = 4 / 3; // mismas proporciones que las fotos
+  const STEP = 33;          // grados entre tarjetas en el tambor
+  const DRUM = 2.22;        // radio del tambor, en altos de tarjeta
+  const LENS = 2.7;         // distancia de perspectiva
+  const RING_R = 1.14;      // radio del anillo
+  const RING_MAX = 0.31;    // … pero el anillo cabe en el escenario
+  const BOW = 1.82;         // el tambor se curva hacia la izquierda al alejarse del frente
+  const CULL = 1.6;         // vecinos que vale la pena dibujar
+  const WHEEL_UNITS = 700;  // delta de la ruedita que equivale a un proyecto
+  const DRAG_UNITS = 380;   // píxeles arrastrados que equivalen a un proyecto
+  const SETTLE = 140;       // pausa tras el último giro antes de asentarse
+  const EASE = 0.12;
+
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const rad = deg => (deg * Math.PI) / 180;
+  const place = (ringDeg, drumDeg, ringR, drumR, bow, m) =>
+    `translateX(${m * -bow * (1 - Math.cos(rad(drumDeg)))}px)` +
+    ` rotateZ(${(1 - m) * ringDeg}deg) translateY(${-(1 - m) * ringR}px)` +
+    ` rotateX(${-m * drumDeg}deg) translateZ(${m * drumR}px)`;
+
+  let teardown = null;
+
+  const mount = () => {
+    const label = root.dataset.label || 'Proyectos';
+    const stage = document.createElement('div');
+    stage.className = 'works-stage';
+    stage.tabIndex = 0;
+    stage.setAttribute('aria-label', `${label}. Usa las flechas arriba y abajo para girar la rueda.`);
+    const ring = document.createElement('p');
+    ring.className = 'works-ring-label';
+    ring.setAttribute('aria-hidden', 'true');
+    ring.innerHTML = `<span>${label.replace(/\s*('\d+)$/, '<em>$1</em>')}</span>`;
+    const front = document.createElement('p');
+    front.className = 'works-front';
+    front.setAttribute('aria-live', 'polite');
+    const index = document.createElement('ol');
+    index.className = 'works-index';
+    const hint = document.createElement('p');
+    hint.className = 'works-hint';
+    hint.setAttribute('aria-hidden', 'true');
+    hint.textContent = 'Gira con la rueda del mouse o arrastra ↓';
+
+    const faces = cards.map(card => {
+      const img = card.querySelector('img');
+      const face = document.createElement('span');
+      face.className = 'work-face';
+      img.before(face);
+      face.append(img);
+      img.sizes = '44vw';
+      img.loading = 'eager';
+      return face;
+    });
+    const buttons = cards.map((card, i) => {
+      const li = document.createElement('li');
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = card.dataset.title;
+      b.addEventListener('click', () => to(i + 1));
+      li.append(b);
+      index.append(li);
+      return b;
+    });
+
+    list.before(stage);
+    stage.append(list);
+    root.append(ring, front, index, hint);
+    root.classList.add('is-wheel');
+
+    let turn = 0, target = 0, active = -1, frame = 0, settling = 0;
+    let g = {};
+
+    const measure = () => {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      const cardW = Math.min(h * CARD_H * CARD_RATIO, w * CARD_MAX_W);
+      const cardH = cardW / CARD_RATIO;
+      const ringR = Math.min(cardH * RING_R, h * RING_MAX);
+      g = {
+        w, cardW, cardH, ringR, drumR: cardH * DRUM, bow: cardH * BOW,
+        ringScale: clamp((((2 * Math.PI * ringR) / count) * 0.82) / cardW, 0.16, 1),
+      };
+      stage.style.perspective = `${cardH * LENS}px`;
+      cards.forEach(card => {
+        card.style.width = `${cardW}px`;
+        card.style.height = `${cardH}px`;
+        card.style.marginLeft = `${-cardW / 2}px`;
+        card.style.marginTop = `${-cardH / 2}px`;
+      });
+      ring.style.fontSize = `${clamp(ringR * 0.17, 26, 52)}px`;
+      front.style.maxWidth = `${Math.max(160, (w - cardW) / 2 - w * 0.05 - 36)}px`;
+      front.querySelector('b')?.style.setProperty('font-size', `${clamp(cardH * 0.11, 26, 46)}px`);
+    };
+
+    const setActive = i => {
+      if (i === active) return;
+      active = i;
+      const card = cards[i];
+      front.innerHTML = `<i>${String(i + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}</i><b></b><span></span>`;
+      front.querySelector('b').textContent = card.dataset.title;
+      front.querySelector('span').textContent = card.dataset.meta;
+      front.querySelector('b').style.fontSize = `${clamp(g.cardH * 0.11, 26, 46)}px`;
+      buttons.forEach((b, k) => b.setAttribute('aria-current', String(k === i)));
+    };
+
+    const draw = () => {
+      frame = requestAnimationFrame(draw);
+      const gap = target - turn;
+      if (Math.abs(gap) < 0.0005) turn = target;
+      else turn += gap * (reduced.matches ? 1 : EASE);
+      const m = clamp(turn, 0, 1);
+      const pos = Math.max(0, turn - 1);
+      list.style.transform = `translateZ(${-m * g.drumR}px)`;
+      cards.forEach((card, i) => {
+        const d = i - pos;
+        card.style.transform = place(d * (360 / count), d * STEP, g.ringR, g.drumR, g.bow, m);
+        const hidden = m > 0.5 && Math.abs(d) > CULL;
+        card.style.opacity = hidden ? '0' : '1';
+        card.style.pointerEvents = hidden ? 'none' : '';
+        faces[i].style.transform = `scale(${g.ringScale + (1 - g.ringScale) * m})`;
+      });
+      ring.style.opacity = String(1 - m);
+      hint.style.opacity = String(1 - m);
+      front.style.opacity = String(m);
+      setActive(clamp(Math.round(pos), 0, last));
+    };
+
+    const to = next => { target = clamp(next, 0, last + 1); };
+
+    // La ruedita solo gira la rueda mientras el escenario está completo en
+    // pantalla y todavía tiene a dónde ir; en los extremos la página sigue.
+    const inView = () => {
+      const r = stage.getBoundingClientRect();
+      return r.top > -r.height * 0.12 && r.bottom < innerHeight + r.height * 0.12;
+    };
+    const onWheel = event => {
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || !inView()) return;
+      const next = target + event.deltaY / WHEEL_UNITS;
+      if (next <= 0 || next >= last + 1) return;
+      event.preventDefault();
+      to(next);
+      clearTimeout(settling);
+      settling = setTimeout(() => to(Math.round(target)), SETTLE);
+    };
+
+    let dragY = null, moved = 0;
+    const onDown = event => {
+      if (event.button !== 0 || event.target.closest('.works-index')) return;
+      dragY = event.clientY; moved = 0;
+      stage.setPointerCapture(event.pointerId);
+    };
+    const onMove = event => {
+      if (dragY === null) return;
+      moved += Math.abs(dragY - event.clientY);
+      to(target + (dragY - event.clientY) / DRAG_UNITS);
+      dragY = event.clientY;
+    };
+    const onUp = event => {
+      if (dragY === null) return;
+      dragY = null;
+      if (moved < 6) {
+        // Un clic en el anillo abre la rueda en ese proyecto; en el tambor, lo trae al frente.
+        const card = document.elementsFromPoint(event.clientX, event.clientY).find(el => el.classList?.contains('work'));
+        const i = cards.indexOf(card);
+        if (i >= 0) to(i + 1);
+        else if (target < 1) to(1);
+        return;
+      }
+      if (target > 1) to(Math.round(target));
+      else if (target > 0) to(target > 0.35 ? 1 : 0);
+    };
+    const onKey = event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') to(Math.round(target) + 1);
+      else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') to(Math.round(target) - 1);
+      else if (event.key === 'Home') to(0);
+      else if (event.key === 'End') to(last + 1);
+      else return;
+      event.preventDefault();
+    };
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(stage);
+    measure();
+    stage.addEventListener('wheel', onWheel, { passive: false });
+    stage.addEventListener('pointerdown', onDown);
+    stage.addEventListener('pointermove', onMove);
+    stage.addEventListener('pointerup', onUp);
+    stage.addEventListener('pointercancel', onUp);
+    stage.addEventListener('keydown', onKey);
+    // Solo anima mientras la sección está cerca de la pantalla.
+    const io = new IntersectionObserver(([entry]) => {
+      cancelAnimationFrame(frame);
+      if (entry.isIntersecting) frame = requestAnimationFrame(draw);
+    }, { rootMargin: '200px 0px' });
+    io.observe(root);
+    draw();
+
+    teardown = () => {
+      cancelAnimationFrame(frame); clearTimeout(settling); ro.disconnect(); io.disconnect();
+      stage.replaceWith(list);
+      [ring, front, index, hint].forEach(el => el.remove());
+      root.classList.remove('is-wheel');
+      list.style.transform = '';
+      cards.forEach((card, i) => {
+        card.removeAttribute('style');
+        const img = faces[i].querySelector('img');
+        img.sizes = '(max-width: 760px) 82vw, 44vw';
+        faces[i].replaceWith(img);
+      });
+      teardown = null;
+    };
+  };
+
+  const sync = () => {
+    if (desktop.matches && !teardown) mount();
+    else if (!desktop.matches && teardown) teardown();
+  };
+  desktop.addEventListener('change', sync);
+  sync();
+})();

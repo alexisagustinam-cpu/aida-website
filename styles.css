@@ -155,19 +155,42 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 
 /* cases */
 .cases { padding: 88px var(--edge); background: linear-gradient(180deg, #fff 0%, #f8fbff 100%) }
-.cases-intro, .case-list { width: min(1280px, 100%); margin-inline: auto }
+.cases-intro, .works { width: min(1280px, 100%); margin-inline: auto }
 .cases-intro { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 44px }
 .cases-intro > p { max-width: 380px; margin: 0; color: var(--muted); font-size: 15px }
-.case-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px }
-.case-card { min-width: 0; transition: transform 220ms var(--ease) }
-.case-card img { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 24px 48px rgba(18, 47, 85, .14); transition: box-shadow 220ms var(--ease) }
-.case-meta { display: flex; gap: 8px; align-items: center; margin-top: 18px }
-.case-meta span, .case-meta b { padding: 7px 12px; border-radius: 999px; background: #e8f3ff; font-size: 12px }
-.case-meta b { background: var(--navy); color: #fff }
-.case-meta .case-tag { background: transparent; border: 1px solid #bcc9d9; color: var(--muted) }
-.case-scope { margin: 12px 0 0; color: var(--muted); font-size: 14px; font-weight: 700 }
-.case-result { margin: 4px 0 0; font-size: 14px }
-.case-result strong { margin-right: 4px; color: var(--blue); font-size: 22px; letter-spacing: -.02em }
+
+/* works: carrusel deslizable por defecto; app.js lo convierte en rueda en escritorio */
+.works-list { display: flex; gap: 22px; margin: 0; padding: 4px 0 26px; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain }
+.works-list::-webkit-scrollbar { display: none }
+.work { flex: 0 0 min(460px, 82vw); scroll-snap-align: start }
+.work img { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 22px 44px -18px rgba(18, 47, 85, .35); user-select: none; -webkit-user-drag: none }
+.work-caption { display: flex; flex-direction: column; gap: 3px; margin: 16px 0 0; font-size: 14px; color: var(--muted) }
+.work-caption b { color: var(--ink); font-size: 17px; letter-spacing: -.01em }
+
+.works.is-wheel { position: relative; width: auto; height: clamp(600px, 94svh, 920px); margin-inline: calc(var(--edge) * -1); overflow: hidden; user-select: none; -webkit-user-select: none }
+.is-wheel .works-stage { position: absolute; inset: 0; cursor: grab; outline: none; touch-action: pan-y; -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%) }
+.is-wheel .works-stage:active { cursor: grabbing }
+.is-wheel .works-stage:focus-visible { outline: 2px solid var(--blue); outline-offset: -6px; border-radius: 18px }
+.is-wheel .works-list { position: absolute; top: 50%; left: 50%; display: block; padding: 0; overflow: visible; transform-style: preserve-3d }
+.is-wheel .work { position: absolute; top: 0; left: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; will-change: transform }
+.is-wheel .work-face { display: block; width: 100%; height: 100%; transform-origin: 50% 50% }
+.is-wheel .work img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; box-shadow: 0 26px 50px -22px rgba(6, 29, 57, .5) }
+.is-wheel .work-caption { display: none }
+.works-ring-label, .works-front, .works-index, .works-hint { position: absolute; pointer-events: none }
+.works-ring-label { inset: 0; display: grid; place-items: center; margin: 0; color: var(--navy); font-weight: 800; letter-spacing: -.035em; line-height: 1 }
+.works-ring-label span { text-align: center }
+.works-ring-label em { display: block; color: var(--blue); font-size: 1.9em; font-style: normal }
+.works-front { top: 50%; left: max(32px, 5%); margin: 0; transform: translateY(-50%); opacity: 0 }
+.works-front b { display: block; color: var(--navy); font-weight: 800; letter-spacing: -.035em; line-height: 1.02; text-wrap: balance }
+.works-front span { display: block; margin-top: 14px; color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1.45 }
+.works-front i { display: block; margin-bottom: 14px; color: var(--blue); font-size: 12px; font-style: normal; font-weight: 800; letter-spacing: .08em }
+.works-index { top: 9%; right: max(32px, 4%); margin: 0; padding: 0; list-style: none; text-align: right; pointer-events: auto }
+.works-index button { padding: 3px 0; border: 0; background: none; color: #8a96a8; font: inherit; font-size: 14px; font-weight: 600; line-height: 1.6; cursor: pointer; transition: color 200ms var(--ease) }
+.works-index button:hover, .works-index button[aria-current="true"] { color: var(--navy) }
+.works-index button[aria-current="true"] { font-weight: 800 }
+.works-index button[aria-current="true"]::before { content: ""; display: inline-block; width: 7px; height: 7px; margin: 0 8px 1px 0; border-radius: 50%; background: var(--orange) }
+.works-index button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px }
+.works-hint { bottom: 3.5%; left: 50%; margin: 0; transform: translateX(-50%); color: var(--muted); font-size: 13px; font-weight: 700; letter-spacing: .02em; white-space: nowrap }
 
 /* trust strip */
 .trust-strip { padding: 22px var(--edge); background: var(--navy); color: #fff }
@@ -299,8 +322,6 @@ footer { padding: 54px 0 30px; background: var(--navy); color: #fff }
   .button-white:hover { background: #fff; color: var(--navy); box-shadow: 0 10px 22px rgba(6, 29, 57, .2) }
   .button-ghost:hover { background: rgba(255, 255, 255, .12); border-color: #fff }
   .service-card:hover { transform: translateY(-5px); border-color: #bacaf0; box-shadow: 0 16px 30px rgba(18, 47, 85, .11) }
-  .case-card:hover { transform: translateY(-6px) }
-  .case-card:hover img { box-shadow: 0 30px 54px rgba(18, 47, 85, .2) }
   .team-card:hover .portrait-person { transform: translateY(-5px) }
   .contact-links a:hover { border-color: var(--blue); color: var(--blue) }
   .contact-links-footer a:hover { border-color: #fff; color: #fff }
@@ -312,7 +333,7 @@ button:active, .button:active { transform: scale(.98) }
 @media (min-width: 761px) {
   :root { --edge: max(32px, calc((100% - 1440px) / 2)) }
   .wrap, .header-inner { width: min(1440px, calc(100% - 64px)) }
-  .services > *, .team > *, .cases-intro, .case-list { width: min(1440px, 100%) }
+  .services > *, .team > *, .cases-intro, .works { width: min(1440px, 100%) }
   .hero { padding-block: 54px }
   .hero-copy { width: min(620px, 47%) }
   .hero h1 { font-size: clamp(42px, 4.2vw, 64px); line-height: 1.05; letter-spacing: -.045em }
@@ -343,7 +364,6 @@ button:active, .button:active { transform: scale(.98) }
   .stage-panel h3 { font-size: 32px }
   .stage-panel p { font-size: 17px }
   .cases { padding-block: 118px }
-  .case-list { gap: 34px }
   .process-steps { margin-top: 56px; gap: 24px }
   .process-steps li { padding: 30px 28px 34px }
   .team { padding-top: 112px }
@@ -416,8 +436,7 @@ button:active, .button:active { transform: scale(.98) }
 
   .cases { padding: 64px var(--edge) }
   .cases-intro { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px }
-  .case-list { grid-template-columns: 1fr; gap: 40px }
-  .case-card img { box-shadow: 0 16px 30px rgba(18, 47, 85, .12) }
+  .works-list { gap: 16px; margin-inline: calc(var(--edge) * -1); padding-inline: var(--edge); scroll-padding-inline: var(--edge) }
 
   .team-top .button { width: 100% }
   .team-lead { margin: 16px 0 29px }
@@ -477,7 +496,7 @@ button:active, .button:active { transform: scale(.98) }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto }
   .js .reveal, .js .reveal-image { opacity: 1; transform: none; clip-path: none; transition: none }
-  .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .case-card, .case-card img, .portrait-person, .whatsapp-float, .faq summary svg, .flow-step, .flow-icon { transition: none }
+  .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .works-index button, .portrait-person, .whatsapp-float, .faq summary svg, .flow-step, .flow-icon { transition: none }
   .stage-panel.is-entering { animation: none }
   .mobile-cta, .mobile-cta.is-visible { transition: none }
   .lw-stroke, .lw-tagline, .lw-fill { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none }

@@ -8,10 +8,14 @@
 - Software y Web: sitios, landings y herramientas a medida.
 - IA y Automatización: WhatsApp, CRM y procesos automatizados.
 
-## Proyectos (conceptos de diseño)
-- Raíces Santorini (inmobiliario, Cayambe): concepto de landing + WhatsApp + SEO.
-- Selfie Dental (salud): concepto de web + CRM + WhatsApp.
-- Yakutours (turismo en Ecuador): concepto de rediseño web + reservas en línea.
+## Proyectos
+- Rayces (inmobiliario, Cayambe): landing inmobiliaria.
+- Noble Barber Studio (barbería): sistema de reservas y presencia digital.
+- Global Ferretería (ferretería): catálogo digital para ventas.
+- Andes Floral Supply (floricultura): catálogo floral y pedidos.
+- La Nube del 10 (retail): catálogo de sabores y pedidos por WhatsApp.
+- Villas de San Pablo (inmobiliario): landing orientada a conversión.
+- Pepito (restaurante): carta digital y reservas.
 
 ## Equipo
 - Agustín: Software & IA
