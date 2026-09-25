@@ -27,7 +27,8 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="assets/img/hero-1672.webp" imagesrcset="assets/img/hero-900.webp 900w, assets/img/hero-1672.webp 1672w" imagesizes="100vw" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-1672.webp" imagesrcset="assets/img/hero-900.webp 900w, assets/img/hero-1672.webp 1672w" imagesizes="100vw" media="(min-width: 761px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-mobile-800.webp" imagesrcset="assets/img/hero-mobile-800.webp 800w, assets/img/hero-mobile-1240.webp 1240w" imagesizes="100vw" media="(max-width: 760px)" fetchpriority="high">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
   <link rel="stylesheet" href="styles.css">
 
@@ -97,13 +98,13 @@
 
   <main id="contenido">
     <section class="hero" id="inicio">
-      <img class="hero-background" src="assets/img/hero-1672.webp" srcset="assets/img/hero-900.webp 900w, assets/img/hero-1672.webp 1672w" sizes="100vw" width="1672" height="941" alt="El equipo de AIDA Digital Solutions" fetchpriority="high">
+      <picture class="hero-picture"><source media="(max-width: 760px)" srcset="assets/img/hero-mobile-800.webp 800w, assets/img/hero-mobile-1240.webp 1240w" sizes="100vw" width="1240" height="910"><img class="hero-background" src="assets/img/hero-1672.webp" srcset="assets/img/hero-900.webp 900w, assets/img/hero-1672.webp 1672w" sizes="100vw" width="1672" height="941" alt="El equipo de AIDA Digital Solutions" fetchpriority="high"></picture>
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="hero-copy">
         <h1>Convertimos tu web y tu WhatsApp en un sistema que <em>vende.</em></h1>
         <p>Web, SEO, CRM y automatización con IA, conectados. Para inmobiliarias, clínicas, turismo y negocios de servicios que quieren más clientes con menos trabajo manual.</p>
         <div class="actions"><a class="button" href="#formulario">Agenda tu diagnóstico gratis <b aria-hidden="true">→</b></a><a class="button button-outline" href="#proyectos">Ver proyectos</a></div>
-        <ul class="facts">
+        <ul class="facts stagger">
           <li><strong>+50</strong><span>proyectos<br>lanzados</span></li>
           <li><strong>4</strong><span>especialistas,<br>un solo equipo</span></li>
           <li><strong>7</strong><span>etapas conectadas<br>en tu sistema</span></li>
@@ -274,7 +275,7 @@
     <section class="faq section" id="preguntas">
       <div class="wrap faq-inner">
         <div class="reveal"><p class="eyebrow">PREGUNTAS FRECUENTES</p><h2>Lo que todos <span>nos preguntan.</span></h2><p class="section-note">¿No está tu pregunta? Escríbenos y te respondemos directo.</p></div>
-        <div class="faq-list reveal">
+        <div class="faq-list reveal stagger-self">
           <details><summary>¿Cuánto cuesta un proyecto?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Depende del alcance: una landing no cuesta lo mismo que un sistema completo con CRM y automatizaciones. Después del diagnóstico gratuito recibes una propuesta cerrada con precio y plazos, antes de comprometerte a nada.</p></details>
           <details><summary>¿Cuánto tiempo toma?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Una landing se lanza mucho más rápido que un sistema completo. En la propuesta te damos un cronograma por etapas, y trabajamos por partes para que empieces a ver resultados antes de terminar todo.</p></details>
           <details><summary>¿El diagnóstico me compromete a algo?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. Son 20 minutos para entender tu negocio y mostrarte oportunidades concretas. Si después quieres trabajar con nosotros, genial; si no, te llevas el análisis igual.</p></details>
@@ -298,7 +299,7 @@
           <p class="eyebrow">DIAGNÓSTICO GRATUITO</p>
           <h2 id="form-title">Cuéntanos de tu negocio. Te respondemos con un plan.</h2>
           <p>Déjanos tus datos y coordinamos una llamada de 20 minutos para revisar tu web, tus canales y dónde se están escapando tus clientes.</p>
-          <ul class="form-benefits">
+          <ul class="form-benefits stagger">
             <li><svg aria-hidden="true"><use href="#i-check"/></svg>Sin costo y sin compromiso</li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg>Hablas directo con el equipo que lo construye</li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg>Te llevas recomendaciones concretas</li>

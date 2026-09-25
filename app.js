@@ -73,10 +73,16 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     }, { threshold: 0.05 }).observe(document.querySelector('#inicio'));
   }
 
+  // Fondo oscuro detrás del menú en el teléfono (fuera del header, que tiene backdrop-filter).
+  const backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  backdrop.setAttribute('aria-hidden', 'true');
+  document.body.append(backdrop);
   const setMenu = open => {
     menu.setAttribute('aria-expanded', String(open));
     menuLabel.textContent = open ? 'Cerrar menú' : 'Abrir menú';
     nav.classList.toggle('is-open', open);
+    backdrop.classList.toggle('is-open', open);
   };
   menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
   nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
@@ -96,6 +102,18 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     const tabs = [...system.querySelectorAll('[role="tab"]')];
     const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
     const flow = system.querySelector('.flow');
+    // En el teléfono: nombre de la etapa, barra de avance y puntos bajo la fila de íconos.
+    const caption = document.createElement('p');
+    caption.className = 'flow-caption';
+    caption.setAttribute('aria-hidden', 'true');
+    const progress = document.createElement('div');
+    progress.className = 'flow-progress';
+    const dots = document.createElement('p');
+    dots.className = 'swipe-hint';
+    dots.setAttribute('aria-hidden', 'true');
+    dots.innerHTML = tabs.map(() => '<i></i>').join('');
+    flow.after(caption, progress);
+    system.append(dots);
     const STAGE_MS = 6000;
     const canAutoplay = !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window;
     let current = 0;
@@ -106,17 +124,27 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 
     system.style.setProperty('--stage-duration', `${STAGE_MS}ms`);
     const select = (index, { focus = false } = {}) => {
+      const previous = current;
       current = (index + tabs.length) % tabs.length;
       tabs.forEach((tab, i) => {
         const active = i === current;
         tab.setAttribute('aria-selected', String(active));
+        tab.classList.toggle('is-done', i < current);
         tab.tabIndex = active ? 0 : -1;
-        panels[i].hidden = !active;
+        panels[i].classList.toggle('is-off', !active);
+        panels[i].inert = !active;
       });
       const panel = panels[current];
-      panel.classList.remove('is-entering');
+      panel.classList.remove('is-entering', 'from-prev');
       void panel.offsetWidth;
       panel.classList.add('is-entering');
+      panel.classList.toggle('from-prev', current < previous && !(previous === tabs.length - 1 && current === 0));
+      caption.innerHTML = `<b>${tabs[current].querySelector('b').textContent}</b><span>${tabs[current].querySelector('small').textContent}</span>`;
+      caption.classList.remove('is-changing');
+      void caption.offsetWidth;
+      caption.classList.add('is-changing');
+      progress.style.setProperty('--stage-color', getComputedStyle(tabs[current]).getPropertyValue('--stage-color'));
+      [...dots.children].forEach((dot, i) => dot.classList.toggle('is-on', i === current));
       // Centra la pestaña activa en móvil sin mover la página verticalmente.
       const tab = tabs[current];
       if (flow.scrollWidth > flow.clientWidth) {
@@ -145,8 +173,24 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
         select(keys[event.key], { focus: true });
       });
     });
-    system.addEventListener('pointerenter', () => { paused = true; restartProgress(); });
-    system.addEventListener('pointerleave', () => { paused = false; restartProgress(); });
+    // En el teléfono se desliza el panel a los lados para cambiar de etapa.
+    let touch = null;
+    system.querySelector('.stage-panels').addEventListener('touchstart', event => {
+      touch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    }, { passive: true });
+    system.querySelector('.stage-panels').addEventListener('touchend', event => {
+      if (!touch) return;
+      const dx = event.changedTouches[0].clientX - touch.x;
+      const dy = event.changedTouches[0].clientY - touch.y;
+      touch = null;
+      if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+      stop();
+      select(current + (dx < 0 ? 1 : -1));
+      track('system_swipe', { stage: current + 1 });
+    }, { passive: true });
+    // Solo el mouse pausa el avance; en pantallas táctiles pointerleave no llega hasta tocar otra cosa.
+    system.addEventListener('pointerenter', event => { if (event.pointerType !== 'mouse') return; paused = true; restartProgress(); });
+    system.addEventListener('pointerleave', event => { if (event.pointerType !== 'mouse') return; paused = false; restartProgress(); });
     system.addEventListener('focusin', () => { paused = true; restartProgress(); });
     system.addEventListener('focusout', () => { paused = false; restartProgress(); });
     if (canAutoplay) {
@@ -391,19 +435,24 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   // ─── Animaciones de entrada ──────────────────────────────────────────────
   const revealItems = [...document.querySelectorAll('.reveal')];
   const show = item => item.classList.add('is-visible');
-  revealItems.forEach((item, index) => {
-    item.style.setProperty('--reveal-delay', `${Math.min((index % 5) * 65, 260)}ms`);
+  document.querySelectorAll('.stagger, .stagger-self').forEach(list => {
+    [...list.children].forEach((child, i) => child.style.setProperty('--i', i));
   });
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
     revealItems.forEach(show);
     return;
   }
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      show(entry.target);
-      observer.unobserve(entry.target);
-    }
-  }), { threshold: 0.14, rootMargin: '0px 0px -5% 0px' });
+  // Lo que entra a la vez aparece en cascada, en orden de lectura; lo que entra solo, sin esperar.
+  const observer = new IntersectionObserver(entries => {
+    entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => (a.boundingClientRect.top - b.boundingClientRect.top) || (a.boundingClientRect.left - b.boundingClientRect.left))
+      .forEach((entry, i) => {
+        entry.target.style.setProperty('--reveal-delay', `${Math.min(i * 90, 360)}ms`);
+        show(entry.target);
+        observer.unobserve(entry.target);
+      });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   revealItems.forEach(item => observer.observe(item));
 
   // Algunos navegadores no disparan IntersectionObserver en scrolls muy rápidos.
@@ -668,4 +717,34 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   };
   desktop.addEventListener('change', sync);
   sync();
+})();
+
+// ─── Preguntas frecuentes: abrir y cerrar con suavidad ──────────────────────
+// <details> abre de golpe; aquí se anima la altura de la fila entre cerrada y
+// abierta. Sin JS o con movimiento reducido queda el comportamiento nativo.
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !Element.prototype.animate) return;
+  document.querySelectorAll('.faq details').forEach(details => {
+    const summary = details.querySelector('summary');
+    let animation = null;
+    const run = (from, to, done) => {
+      animation?.cancel();
+      details.style.overflow = 'hidden';
+      animation = details.animate({ height: [`${from}px`, `${to}px`] }, { duration: 420, easing: 'cubic-bezier(.16, 1, .3, 1)' });
+      animation.onfinish = () => { animation = null; details.style.overflow = ''; done?.(); };
+    };
+    summary.addEventListener('click', event => {
+      event.preventDefault();
+      const start = details.offsetHeight;
+      const closing = details.open && !details.classList.contains('is-closing');
+      if (closing) {
+        details.classList.add('is-closing');
+        run(start, summary.offsetHeight + 1, () => { details.open = false; details.classList.remove('is-closing'); });
+      } else {
+        details.classList.remove('is-closing');
+        details.open = true;
+        run(start, details.offsetHeight);
+      }
+    });
+  });
 })();
