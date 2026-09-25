@@ -458,19 +458,21 @@ button:active, .button:active { transform: scale(.98) }
 
 /* Logo que se escribe: cada trazo de la máscara destapa el logo real en orden de escritura */
 .logo .logo-write { overflow: visible }
-.lw-stroke { fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0; animation: lw-draw .5s cubic-bezier(.45, 0, .55, 1) forwards }
-/* Cada letra vive en su propia capa: un trazo nunca destapa la letra vecina */
-.lw-1 { animation-delay: .2s; animation-duration: 1.05s; animation-timing-function: cubic-bezier(.4, 0, .8, 1) }
-.lw-2 { animation-delay: 1.25s; animation-duration: .22s; animation-timing-function: cubic-bezier(.2, 0, .3, 1) }
-.lw-3 { animation-delay: 1.52s; animation-duration: .24s }
-.lw-4 { animation-delay: 1.82s; animation-duration: .12s }
-.lw-5 { animation-delay: 2s; animation-duration: .5s }
-.lw-6 { animation-delay: 2.46s; animation-duration: .24s }
-.lw-7 { animation-delay: 2.74s; animation-duration: .5s }
-.lw-8 { animation-delay: 3.2s; animation-duration: .24s }
-.lw-tagline { transform-box: fill-box; transform-origin: left center; transform: scaleX(0); animation: lw-wipe .7s 3.3s var(--ease) forwards }
+.lw-stroke { fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0; animation: lw-draw .4s cubic-bezier(.45, 0, .55, 1) forwards }
+/* Cada letra vive en su propia capa y se destapa con una pluma que sigue su línea central, con su mismo grosor */
+.lw-1 { animation-delay: .2s; animation-duration: 1.5s; animation-timing-function: cubic-bezier(.35, 0, .5, 1) }
+.lw-2 { animation-delay: 1.8s; animation-duration: 0.25s }
+.lw-3 { animation-delay: 2.12s; animation-duration: 0.1s }
+.lw-4 { animation-delay: 2.3s; animation-duration: 0.45s }
+.lw-5 { animation-delay: 2.75s; animation-duration: 0.22s }
+.lw-6 { animation-delay: 3.05s; animation-duration: 0.45s }
+.lw-7 { animation-delay: 3.5s; animation-duration: 0.22s }
+.lw-tagline { transform-box: fill-box; transform-origin: left center; transform: scaleX(0); animation: lw-wipe .7s 3.55s var(--ease) forwards }
+/* Al final entra el logo completo para asentar los bordes que la pluma no toca */
+.lw-fill { opacity: 0; animation: lw-fade .3s 3.75s ease-out forwards }
 @keyframes lw-draw { from { opacity: 1; stroke-dashoffset: 1 } to { opacity: 1; stroke-dashoffset: 0 } }
 @keyframes lw-wipe { to { transform: scaleX(1) } }
+@keyframes lw-fade { to { opacity: 1 } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto }
@@ -478,5 +480,5 @@ button:active, .button:active { transform: scale(.98) }
   .site-header, .site-nav a, .site-nav a::after, .button, .button b, .service-card, .case-card, .case-card img, .portrait-person, .whatsapp-float, .faq summary svg, .flow-step, .flow-icon { transition: none }
   .stage-panel.is-entering { animation: none }
   .mobile-cta, .mobile-cta.is-visible { transition: none }
-  .lw-stroke, .lw-tagline { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none }
+  .lw-stroke, .lw-tagline, .lw-fill { animation: none; opacity: 1; stroke-dashoffset: 0; transform: none }
 }
